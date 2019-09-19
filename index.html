@@ -23,7 +23,7 @@
 	<div class="video-wrapper-container">
         <div class="video-wrapper">
 			<div id="dropzone">
-				<form class="dropzone needsclick" id="demo-upload" action="/upload">
+				<form class="dropzone needsclick" id="video_upload" action="/upload">
 				    <div class="dz-message needsclick">
 				        Перетащи файл сюда или нажми<br>
 				        <span class="note needsclick">Загрузить</span>
@@ -32,7 +32,7 @@
 			</div>
             <div class="video-uploaded">
                 <div class="resizer-fit-preview resizer-fit-916 video-preview-container" style="background: rgb(0, 0, 0);">
-                	<!-- <video class="resizer-fit-video" controls="" src="uploads/thanos.mp4" loop="" autoplay="" preload="auto" playsinline="" style="transform: scale(1); bottom: 0%; left: 0%;"></video> -->
+                	<video class="resizer-fit-video" muted controls="" src="uploads/thanos.mp4" loop="" autoplay="" preload="auto" playsinline="" style="transform: scale(1); bottom: 0%; left: 0%;"></video>
                 </div>
             </div>
         </div>
@@ -49,38 +49,40 @@
 		<ul class="resizer-social-options-container grid">
 		    <li class="resizer-social-option right bottom">
 		        <label class="radio-label">
-		        	<input type="radio" value="S" name="A" disabled>S11</input>
+		        	<input type="radio" value="11" name="A" disabled>S11</input>
 		        </label>
 		    </li>
 		    <li class="resizer-social-option bottom">
 		        <label class="radio-label">
-		        	<input type="radio" value="V" name="A" disabled>V916</input>
+		        	<input type="radio" value="916" name="A" disabled>V916</input>
 		        </label>
 		    </li>
 		    <li class="resizer-social-option right">
 		        <label class="radio-label">
-		        	<input type="radio" value="H" name="A" disabled>H169</input>
+		        	<input type="radio" value="169" name="A" disabled>H169</input>
 		        </label>
 		    </li>
 		    <li class="resizer-social-option">
 		        <label class="radio-label">
-		        	<input type="radio" value="F" name="A" disabled>F45</input>
+		        	<input type="radio" value="45" name="A" disabled>F45</input>
 		        </label>
 		    </li>
 		</ul>
     </div>
 </div>
 
-<div class="dz-preview dz-file-preview" style="display: none;">
-  <div class="dz-details">
-    <div class="dz-filename"><span data-dz-name></span></div>
-    <div class="dz-size" data-dz-size></div>
-    <img data-dz-thumbnail />
-  </div>
-  <div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress></span></div>
-  <div class="dz-success-mark"><span>✔</span></div>
-  <div class="dz-error-mark"><span>✘</span></div>
-  <div class="dz-error-message"><span data-dz-errormessage></span></div>
+<div id="preview-template" style="display: none;">
+    <div class="dz-preview dz-file-preview">
+        <div class="dz-details">
+            <div class="dz-filename"><span data-dz-name></span></div>
+            <div class="dz-size" data-dz-size></div>
+            <img data-dz-thumbnail />
+        </div>
+        <div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress></span></div>
+        <div class="dz-success-mark"><span>✔</span></div>
+        <div class="dz-error-mark"><span>✘</span></div>
+        <div class="dz-error-message"><span data-dz-errormessage></span></div>
+    </div>
 </div>
 
 
