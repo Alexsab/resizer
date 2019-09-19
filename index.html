@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>   
+	
+	<meta charset="utf-8">
+	
+	<title>Resizer RoasUp</title>
+	<meta name="description" content="Resizer RoasUp">
+
+	<meta name="viewport" content="width=device-width">
+
+	<link rel="icon" href="img/favicon.png">
+	<meta property="og:image" content="img/@1x/preview.jpg">
+	
+	<link rel="stylesheet" href="css/styles.min.css">
+  
+</head>
+ 
+<body>
+ 
+<div class="editor-container grid">
+	<div class="video-wrapper-container">
+        <div class="video-wrapper">
+			<div id="dropzone">
+				<form class="dropzone needsclick" id="demo-upload" action="/upload">
+				    <div class="dz-message needsclick">
+				        Перетащи файл сюда или нажми<br>
+				        <span class="note needsclick">Загрузить</span>
+				    </div>
+				</form>
+			</div>
+            <div class="video-uploaded">
+                <div class="resizer-fit-preview resizer-fit-916 video-preview-container" style="background: rgb(0, 0, 0);">
+                	<!-- <video class="resizer-fit-video" controls="" src="uploads/thanos.mp4" loop="" autoplay="" preload="auto" playsinline="" style="transform: scale(1); bottom: 0%; left: 0%;"></video> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="workspace-controls">
+        <div class="resizer-social-options-container grid">
+            <div class="resizer-social-option right bottom resizer-social-option-selected">
+                <div class="resize-social-option-name">S11</div>
+            </div>
+            <div class="resizer-social-option right">
+                <div class="resize-social-option-name">V916</div>
+            </div>
+            <div class="resizer-social-option">
+                <div class="resize-social-option-name">H169</div>
+            </div>
+            <div class="resizer-social-option bottom">
+                <div class="resize-social-option-name">F45</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="dz-preview dz-file-preview" style="display: none;">
+  <div class="dz-details">
+    <div class="dz-filename"><span data-dz-name></span></div>
+    <div class="dz-size" data-dz-size></div>
+    <img data-dz-thumbnail />
+  </div>
+  <div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress></span></div>
+  <div class="dz-success-mark"><span>✔</span></div>
+  <div class="dz-error-mark"><span>✘</span></div>
+  <div class="dz-error-message"><span data-dz-errormessage></span></div>
+</div>
+
+
+<script src="js/scripts.min.js"></script>
+
+   
+</body>
+ 
+</html>
