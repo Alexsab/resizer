@@ -38,20 +38,36 @@
         </div>
     </div>
     <div class="workspace-controls">
-        <div class="resizer-social-options-container grid">
-            <div class="resizer-social-option right bottom resizer-social-option-selected">
-                <div class="resize-social-option-name">S11</div>
-            </div>
-            <div class="resizer-social-option bottom">
-                <div class="resize-social-option-name">V916</div>
-            </div>
-            <div class="resizer-social-option right">
-                <div class="resize-social-option-name">H169</div>
-            </div>
-            <div class="resizer-social-option">
-                <div class="resize-social-option-name">F45</div>
-            </div>
-        </div>
+    	<div class="box">
+		  <div class="progress" id="progress">
+		    <div class="inner">
+		      X
+		    </div>
+		  </div>
+		</div>
+
+		<ul class="resizer-social-options-container grid">
+		    <li class="resizer-social-option right bottom">
+		        <label class="radio-label">
+		        	<input type="radio" value="S" name="A" disabled>S11</input>
+		        </label>
+		    </li>
+		    <li class="resizer-social-option bottom">
+		        <label class="radio-label">
+		        	<input type="radio" value="V" name="A" disabled>V916</input>
+		        </label>
+		    </li>
+		    <li class="resizer-social-option right">
+		        <label class="radio-label">
+		        	<input type="radio" value="H" name="A" disabled>H169</input>
+		        </label>
+		    </li>
+		    <li class="resizer-social-option">
+		        <label class="radio-label">
+		        	<input type="radio" value="F" name="A" disabled>F45</input>
+		        </label>
+		    </li>
+		</ul>
     </div>
 </div>
 
@@ -68,6 +84,7 @@
 </div>
 
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/progressbar.js/1.0.1/progressbar.min.js"></script>
 <script src="js/scripts.min.js"></script>
 
    

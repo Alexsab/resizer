@@ -739,14 +739,15 @@ body {
   .grid:not(.resizer-social-options-container) {
     -ms-grid-columns: 100%;
     grid-template-columns: 100%;
-    -ms-grid-rows: 50%;
-    grid-template-rows: 50%;
+    -ms-grid-rows: 100% 400px;
+    grid-template-rows: 100% 400px;
         grid-template-areas: initial;
   }
 }
 
 .grid.resizer-social-options-container {
   grid-gap: 100px;
+  padding: 0;
 }
 
 @media (max-width: 1199.98px) {
@@ -830,8 +831,14 @@ body {
   font-size: 2.1vw;
 }
 
+@media (max-width: 767.98px) {
+  .dz-message {
+    font-size: 3.9vw;
+  }
+}
+
 .dz-message span.note {
-  font-size: 6.5vw;
+  font-size: 3.2em;
 }
 
 .dz-message,
@@ -847,9 +854,14 @@ body {
 }
 
 .resizer-social-option {
-  background: #e91e63;
+  list-style: none;
   max-width: 170px;
   max-height: 170px;
+  width: 100%;
+  height: 100%;
+}
+
+.resizer-social-option label {
   width: 100%;
   height: 100%;
   border-radius: 50%;
@@ -857,16 +869,21 @@ body {
   position: relative;
   color: white;
   font-size: 3vw;
+  background: #999999;
 }
 
 @media (min-width: 992px) {
-  .resizer-social-option {
+  .resizer-social-option label {
     max-width: 12vw;
     max-height: 12vw;
   }
 }
 
-.resizer-social-option.resizer-social-option-selected {
+.resizer-social-option label.color {
+  background: #e91e63;
+}
+
+.resizer-social-option label.checked {
   background: #999999;
 }
 
@@ -882,47 +899,23 @@ body {
           align-self: end;
 }
 
-.resizer-social-option-flex {
-  position: relative;
+.radio-label {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-      -ms-flex-pack: center;
-          justify-content: center;
   -webkit-box-align: center;
   -webkit-align-items: center;
       -ms-flex-align: center;
           align-items: center;
-  margin: 10px;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
-.resizer-social-option-flex:before {
-  border-radius: 50%;
-  width: 100%;
-  padding-bottom: 100%;
-  background: #e91e63;
-  content: "";
-  position: absolute;
-  z-index: -1;
-}
-
-.resizer-social-option-flex.resizer-social-option-selected:before {
-  background: #999999;
-}
-
-.resizer-social-option-flex.right {
-  -ms-grid-column-align: end;
-      justify-self: end;
-}
-
-.resizer-social-option-flex.bottom {
-  -webkit-align-self: end;
-      -ms-flex-item-align: end;
-              -ms-grid-row-align: end;
-          align-self: end;
+input[type="radio"] {
+  display: none;
 }
 
 @media (max-width: 375px) {
@@ -930,4 +923,47 @@ body {
     max-width: 90px;
     max-height: 90px;
   }
+}
+
+.box {
+  display: inline-block;
+  position: absolute;
+  width: 50%;
+  height: 100%;
+}
+
+.progress {
+  width: 100px;
+  height: 100px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  overflow: auto;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  font-size: 2rem;
+}
+
+.progress > .inner {
+  position: absolute;
+  color: #e91e63;
+  color: white;
+}
+
+.progress > svg {
+  height: 100%;
+  display: block;
 }
