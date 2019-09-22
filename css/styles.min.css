@@ -778,7 +778,13 @@ body {
 
 .editor-container {
   height: 100vh;
-  overflow: scroll;
+  overflow: hidden;
+}
+
+@media (max-width: 991.98px) {
+  .editor-container {
+    overflow: auto;
+  }
 }
 
 .video-wrapper-container {
@@ -815,6 +821,14 @@ body {
 
 .video-uploaded {
   display: none;
+  max-width: 256px;
+  width: 100%;
+  height: 512px;
+  background-image: url(../img/resize_mockup.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: relative;
+  overflow: hidden;
 }
 
 .resizer-fit-image {
@@ -844,6 +858,8 @@ body {
   -webkit-transform: scale(1);
       -ms-transform: scale(1);
           transform: scale(1);
+  border-radius: 0 0 30px 30px;
+  padding-bottom: 18px;
 }
 
 .resizer-fit-11 {
@@ -879,8 +895,11 @@ body {
 .video-preview-container {
   line-height: 0px;
   margin: auto;
-  position: relative;
-  background: black;
+  position: absolute;
+  width: 84.2%;
+  height: 100%;
+  left: 21.4px;
+  background: transparent !important;
 }
 
 .dropzone {

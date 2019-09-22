@@ -3,7 +3,7 @@
 @import libs
 
 ::placeholder
-	color: #555
+	color: #666
 
 ::selection
 	background-color: $accent
@@ -80,7 +80,9 @@ body
 
 .editor-container 
 	height: 100vh
-	overflow: scroll
+	overflow: hidden
+	+media-breakpoint-down(md)
+		overflow: auto
 
 .video-wrapper-container
 	text-align: center
@@ -109,7 +111,14 @@ body
 
 .video-uploaded
 	display: none
-
+	max-width: 256px
+	width: 100%
+	height: 512px
+	background-image: url(../img/resize_mockup.png)
+	background-size: cover
+	background-repeat: no-repeat
+	position: relative
+	overflow: hidden
 
 .resizer-fit-image
   max-width: 100%
@@ -132,6 +141,8 @@ body
   display: block
   position: absolute
   transform: scale(1)
+  border-radius: 0 0 30px 30px
+  padding-bottom: 18px
 
 .resizer-fit-11
   width: 450px
@@ -160,8 +171,11 @@ body
 .video-preview-container
 	line-height: 0px
 	margin: auto
-	position: relative
-	background: black
+	position: absolute
+	width: 84.2%
+	height: 100%
+	left: 21.4px
+	background: transparent !important
 
 .dropzone
 	background: transparent
