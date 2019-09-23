@@ -25,22 +25,6 @@ body
 	overflow-x: hidden
 	color: $text
 
-// Custom Sass / Remove before use
-
-.container
-	max-width: 700px
-	padding:
-		right: $gutter/2
-		left: $gutter/2
-	margin:
-		left: auto
-		right: auto
-
-.img-responsive
-	display: block
-	max-width: 100%
-	height: auto
-
 .grid
 	display: grid
 	grid-template-columns: 1fr 1fr
@@ -70,8 +54,6 @@ body
 			grid-gap: 5px
 		.resizer-social-option
 
-
-
 .img
 	width: 100%
 
@@ -91,15 +73,13 @@ body
 	color: white
 
 .video-wrapper 
-	display: flex
-	align-items: center
-	justify-content: center
-
-	// position: relative
-	// top: 50%
-	// transform: translateY(-50%)
-	// box-sizing: border-box
 	padding: 5%
+
+.resizer-fit-preview1
+	position: relative
+	top: 50%
+	transform: translateY(-50%)
+	box-sizing: border-box
 
 .video-wrapper,
 #dropzone,
@@ -111,71 +91,70 @@ body
 
 .video-uploaded
 	display: none
-	max-width: 256px
+	width: 50%
+	height: 200%
+	position: relative
+	+media-breakpoint-down(sm)
+		width: 80%
+
+.device-frame
 	width: 100%
-	height: 512px
-	background-image: url(../img/resize_mockup.png)
-	background-size: cover
+	// padding-bottom: 200%
+	// height: 0
+	height: 100%
+	padding-left: calc(100%/446*37)
+	padding-right: calc(100%/446*33)
+	background-image: url(../img/iphone.svg)
+	background-size: contain
 	background-repeat: no-repeat
+	background-position: center
 	position: relative
 	overflow: hidden
 
-.resizer-fit-image
-  max-width: 100%
-  max-height: 100%
-  display: block
-  transform: scale(1)
-  margin: auto
-  position: absolute
-  top: 0
-  right: 0
-  bottom: 0
-  left: 0 
-
 .resizer-fit-preview
-  overflow: hidden
+	// overflow: hidden
+	position: relative
+	// padding-top: 100%
+	width: 100%
+	// height: 100%
+	// position: absolute
+	// left: 0
 
 .resizer-fit-video
   width: 100%
   height: 100%
   display: block
-  position: absolute
-  transform: scale(1)
-  border-radius: 0 0 30px 30px
-  padding-bottom: 18px
 
 .resizer-fit-11
-  width: 450px
-  height: 450px
+  // width: 450px
+  // height: 450px
+  // height: 16.5%
 
 .resizer-fit-916
-  width: 294px
-  height: 522px
+  // width: 294px
+  // height: 522px
 
 .resizer-fit-169
-  width: 522px
-  height: 294px
+  // width: 522px
+  // height: 294px
 
 .resizer-fit-45
-  width: 400px
-  height: 500px
+  // width: 400px
+  // height: 500px
 
 .resizer-fit-54
-  width: 500px
-  height: 400px
+  // width: 500px
+  // height: 400px
 
 .resizer-fit-820312
-  width: 560px
-  height: 213px
+  // width: 560px
+  // height: 213px
 
 .video-preview-container
-	line-height: 0px
-	margin: auto
-	position: absolute
-	width: 84.2%
-	height: 100%
-	left: 21.4px
-	background: transparent !important
+	// padding: 100% 0
+	// display: flex
+
+/* DROPZONE BEGIN */
 
 .dropzone
 	background: transparent
@@ -195,13 +174,23 @@ body
 	span.note
 		font-size: 3.2em
 
+// .dz-preview,
 .dz-message,
-.dz-preview,
 .resize-social-option-name,
 	position: relative
 	top: 50%
 	transform: translateY(-50%)
 	box-sizing: border-box
+
+/* DROPZONE END */
+
+.video-wrapper,
+.radio-label,
+.device-frame
+	display: flex
+	align-items: center
+	justify-content: center
+
 
 .resizer-social-option 
 	list-style: none
@@ -231,12 +220,6 @@ body
 	&.bottom
 		align-self: end
 
-.radio-label
-	display: flex
-	align-items: center
-	justify-content: center
-
-
 input[type="radio"]
   display: none
 
@@ -246,14 +229,11 @@ input[type="radio"]
 		max-width: 90px
 		max-height: 90px
 
-
-
 .box
 	display: inline-block
 	position: absolute
 	width: 50%
 	height: 100%
-
 
 .progress
 	width: 100px
@@ -275,7 +255,6 @@ input[type="radio"]
 .progress > .inner
 	position: absolute
 	color: white
-
 
 .progress > svg
 	height: 100%
