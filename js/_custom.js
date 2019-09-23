@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function() {
 		        addOrRemoveClassToAll('.resizer-social-option.stepB', '', 'hide');
 	        } else {
 		        addOrRemoveClassToAll('.resizer-social-option.stepA', '', 'hide');
-		        addOrRemoveClassToAll('.resizer-social-option.stepB', 'hide');	        	
+		        addOrRemoveClassToAll('.resizer-social-option.stepB', 'hide');
 	        }
 
 	        // this.parentNode.classList.add('checked');
@@ -43,14 +43,27 @@ document.addEventListener("DOMContentLoaded", function() {
 	});
 	document.querySelectorAll('.resizer-social-option.stepB input').forEach(function(element) {
 		element.addEventListener('click', function(event) {
-			toggleColoeClass('.resizer-social-option.stepB input');
-			this.parentNode.classList.toggle('color');
+
+			if(element.value === 'render') {
+				addOrRemoveClassToAll('.resizer-social-option.stepA.show', '', 'show');
+				addOrRemoveClassToAll('.resizer-social-option.stepB', 'hide');
+				addOrRemoveClassToAll('.resizer-social-option.stepC', '', 'hide');
+			} else {
+				toggleColoeClass('.resizer-social-option.stepB input');
+				this.parentNode.classList.toggle('color');
+			}
+
 	    });
 	});
 	document.querySelectorAll('.resizer-social-option.stepC input').forEach(function(element) {
 		element.addEventListener('click', function(event) {
-			toggleColoeClass('.resizer-social-option.stepC input');
-			this.parentNode.classList.toggle('color');
+			// toggleColoeClass('.resizer-social-option.stepC input');
+			// this.parentNode.classList.toggle('color');
+
+			if(element.value === 'new') {
+				addOrRemoveClassToAll('.resizer-social-option.stepA', '', 'hide');
+				addOrRemoveClassToAll('.resizer-social-option.stepC', 'hide');
+			}
 	    });
 	});
 

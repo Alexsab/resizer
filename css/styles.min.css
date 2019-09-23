@@ -923,6 +923,10 @@ body {
   background: #999999;
 }
 
+.resizer-social-option.stepC .color:hover {
+  background: #999999;
+}
+
 .resizer-social-option.right {
   -ms-grid-column-align: end;
       justify-self: end;
