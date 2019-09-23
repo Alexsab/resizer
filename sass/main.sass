@@ -68,7 +68,6 @@ body
 
 .video-wrapper-container
 	text-align: center
-	box-sizing: border-box
 	background: $ruby
 	color: white
 
@@ -79,7 +78,6 @@ body
 	position: relative
 	top: 50%
 	transform: translateY(-50%)
-	box-sizing: border-box
 
 .video-wrapper,
 #dropzone,
@@ -174,13 +172,18 @@ body
 	span.note
 		font-size: 3.2em
 
-// .dz-preview,
+.dz-preview,
 .dz-message,
 .resize-social-option-name,
 	position: relative
 	top: 50%
 	transform: translateY(-50%)
-	box-sizing: border-box
+
+.dropzone .dz-preview.dz-image-preview,
+.dropzone .dz-preview .dz-details .dz-filename span, 
+.dropzone .dz-preview .dz-details .dz-size span,
+.dropzone .dz-preview.dz-file-preview .dz-image
+	background: none
 
 /* DROPZONE END */
 
