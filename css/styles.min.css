@@ -815,12 +815,42 @@ body {
 .resizer-fit-preview {
   position: relative;
   width: 100%;
+  -webkit-clip-path: inset(0 0 0 0);
+          clip-path: inset(0 0 0 0);
+}
+
+.resizer-fit-preview.bgblack {
+  background-color: #000000;
 }
 
 .resizer-fit-video {
   width: 100%;
   height: 100%;
   display: block;
+  position: absolute;
+}
+
+.resizer-fit-video.first {
+  z-index: 1;
+}
+
+.resizer-fit-video.cover {
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.resizer-fit-video.blur {
+  -o-object-fit: fill;
+     object-fit: fill;
+  -webkit-filter: blur(10px);
+          filter: blur(10px);
+  -webkit-transform: scale(1.2);
+      -ms-transform: scale(1.2);
+          transform: scale(1.2);
+}
+
+.resizer-fit-video.second {
+  z-index: 0;
 }
 
 /* DROPZONE BEGIN */
