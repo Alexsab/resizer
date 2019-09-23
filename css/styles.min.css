@@ -946,6 +946,17 @@ input[type="radio"] {
   }
 }
 
+.hide {
+  display: none;
+}
+
+.show {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
 .box {
   display: inline-block;
   position: absolute;

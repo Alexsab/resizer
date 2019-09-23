@@ -1,21 +1,56 @@
 document.addEventListener("DOMContentLoaded", function() {
 
-	/* */
-	document.querySelectorAll('.resizer-social-option input').forEach(function(element) {
+	function addOrRemoveClassToAll(selector, addClass, removeClass) {
+		document.querySelectorAll(selector).forEach(function(element) {
+	        if(typeof addClass !== 'undefined' && addClass.length > 0)
+		        element.classList.add(addClass);
+	        if(typeof removeClass !== 'undefined' && removeClass.length > 0)
+		        element.classList.remove(removeClass);
+		});
+	}
+
+	function toggleColoeClass(selector) {
+		document.querySelectorAll(selector).forEach(function(element) {
+			if(element.checked === false) {
+		        // element.parentNode.classList.remove('checked');
+		        element.parentNode.classList.add('color');
+		    };
+		});
+	}
+
+	document.querySelectorAll('.resizer-social-option.stepA input').forEach(function(element) {
 		element.addEventListener('click', function(event) {
-			document.querySelectorAll('.resizer-social-option input').forEach(function(element) {
-				if(element.checked === false) {
-			        // element.parentNode.classList.remove('checked');
-			        element.parentNode.classList.add('color');
-			    };
-			});
+			// Снимаем выделение с других кнопок размера, они становятся цветными
+			toggleColoeClass('.resizer-social-option.stepA input');
+
 	        document.querySelector('.video-uploaded .resizer-fit-preview').classList.remove('resizer-fit-11','resizer-fit-916','resizer-fit-169','resizer-fit-45');
 	        document.querySelector('.video-uploaded .resizer-fit-preview').classList.add('resizer-fit-'+this.value);
 	        
-	        resizeFitPreview('resizer-fit-'+this.value);
+	        if(!this.parentNode.parentNode.classList.contains('hide')) {
+		        addOrRemoveClassToAll('.resizer-social-option.stepA', 'hide');
+		        addOrRemoveClassToAll('.resizer-social-option.stepB', '', 'hide');
+	        } else {
+		        addOrRemoveClassToAll('.resizer-social-option.stepA', '', 'hide');
+		        addOrRemoveClassToAll('.resizer-social-option.stepB', 'hide');	        	
+	        }
 
 	        // this.parentNode.classList.add('checked');
-	        this.parentNode.classList.remove('color');
+	        this.parentNode.classList.toggle('color');
+	        this.parentNode.parentNode.classList.toggle('show');
+
+	        resizeFitPreview('resizer-fit-'+this.value);
+	    });
+	});
+	document.querySelectorAll('.resizer-social-option.stepB input').forEach(function(element) {
+		element.addEventListener('click', function(event) {
+			toggleColoeClass('.resizer-social-option.stepB input');
+			this.parentNode.classList.toggle('color');
+	    });
+	});
+	document.querySelectorAll('.resizer-social-option.stepC input').forEach(function(element) {
+		element.addEventListener('click', function(event) {
+			toggleColoeClass('.resizer-social-option.stepC input');
+			this.parentNode.classList.toggle('color');
 	    });
 	});
 
@@ -106,8 +141,8 @@ document.addEventListener("DOMContentLoaded", function() {
 	// Now fake the file upload, since GitHub does not handle file uploads
 	// and returns a 404
 
-	var minSteps = 50,
-	    maxSteps = 100,
+	var minSteps = 25,
+	    maxSteps = 50,
 	    timeBetweenSteps = 100,
 	    bytesPerStep = 100000;
 
