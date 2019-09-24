@@ -840,8 +840,8 @@ body {
 }
 
 .resizer-fit-video.blur {
-  -o-object-fit: fill;
-     object-fit: fill;
+  -o-object-fit: cover;
+     object-fit: cover;
   -webkit-filter: blur(10px);
           filter: blur(10px);
   -webkit-transform: scale(1.2);

@@ -153,9 +153,9 @@ document.addEventListener("DOMContentLoaded", function() {
 		    document.querySelector('#dropzone').style.display = 'none';
 		    document.querySelector('.video-uploaded').style.display = 'initial';
 
-		    var videos = ['uploads/thanosMovie.mp4', 'uploads/1x1.mp4', 'uploads/916.mp4'];
+		    var videos = ['uploads/thanosMovie.mp4', 'uploads/1x1.mp4', 'uploads/916.mp4', '4x5.mp4'];
 		    if(location.hostname == 'localhost') {
-		    	videos = ['uploads/thanosMovie.mp4', 'uploads/1x1.mp4', 'uploads/916.mp4'];
+		    	videos = ['uploads/thanosMovie.mp4', 'uploads/1x1.mp4', 'uploads/916.mp4', '4x5.mp4'];
 		    }
 		    if(parseInt(sessionStorage.getItem('numVideo')) < videos.length-1) {
 		    	sessionStorage.setItem('numVideo', parseInt(sessionStorage.getItem('numVideo'))+1);
