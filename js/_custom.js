@@ -145,7 +145,10 @@ document.addEventListener("DOMContentLoaded", function() {
 			progressBar.animate(0.8);
 		});
 		*/
-		this.on("complete", function(file) {
+		this.on("error", function(file) {
+
+		});
+		this.on("success", function(file) {
 		    // alert("complete");
 		    document.querySelector('#dropzone').style.display = 'none';
 		    document.querySelector('.video-uploaded').style.display = 'initial';
