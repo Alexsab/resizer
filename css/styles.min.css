@@ -881,6 +881,7 @@ body {
 
 .dz-message span.note {
   font-size: 3.2em;
+  text-decoration: underline;
 }
 
 .dz-preview,
