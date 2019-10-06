@@ -283,6 +283,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	Dropzone.autoDiscover = false;
 
 	var dropzoneItem = new Dropzone('#video_upload', {
+	  url: (location.hostname != 'localhost')?'https://'+localStorage.env+'.roasup.com/api/videoResizer/filesUpload':'/upload.php', 
 	  previewTemplate: $('#preview-template').innerHTML,
 	  parallelUploads: 1,
 	  uploadMultiple: false,
