@@ -61,17 +61,17 @@ document.addEventListener("DOMContentLoaded", function() {
 	}
 
 	var videos = [
-    	{'success': true, 'size': 'H', 'renderId': 1, 'file': 'uploads/thanosMovie.mp4'}, 
-    	{'success': true, 'size': 'S', 'renderId': 1, 'file': 'uploads/1x1.mp4'}, 
-    	{'success': true, 'size': 'V', 'renderId': 1, 'file': 'uploads/916.mp4'}, 
-    	{'success': true, 'size': 'F', 'renderId': 1, 'file': 'uploads/4x5.mp4'}
+    	{'success': true, 'R': 'H', 'renderId': 1, 'file': 'uploads/thanosMovie.mp4'}, 
+    	{'success': true, 'R': 'S', 'renderId': 1, 'file': 'uploads/1x1.mp4'}, 
+    	{'success': true, 'R': 'V', 'renderId': 1, 'file': 'uploads/916.mp4'}, 
+    	{'success': true, 'R': 'F', 'renderId': 1, 'file': 'uploads/4x5.mp4'}
     ];
     if(location.hostname == 'localhost') {
     	videos = [
-	    	{'success': true, 'size': 'H', 'renderId': 1, 'file': 'uploads/thanosMovie.mp4'}, 
-	    	{'success': true, 'size': 'S', 'renderId': 1, 'file': 'uploads/1x1.mp4'}, 
-	    	{'success': true, 'size': 'V', 'renderId': 1, 'file': 'uploads/916.mp4'}, 
-	    	{'success': true, 'size': 'F', 'renderId': 1, 'file': 'uploads/4x5.mp4'}
+	    	{'success': true, 'R': 'H', 'renderId': 1, 'file': 'uploads/thanosMovie.mp4'}, 
+	    	{'success': true, 'R': 'S', 'renderId': 1, 'file': 'uploads/1x1.mp4'}, 
+	    	{'success': true, 'R': 'V', 'renderId': 1, 'file': 'uploads/916.mp4'}, 
+	    	{'success': true, 'R': 'F', 'renderId': 1, 'file': 'uploads/4x5.mp4'}
     	];
     }	
 
