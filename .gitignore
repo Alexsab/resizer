@@ -62,3 +62,10 @@ typings/
 
 /**/Thumbs.db
 /**/*.DS_Store
+
+
+uploads/*
+!uploads/1x1.mp4
+!uploads/4x5.mp4
+!uploads/916.mp4
+!uploads/thanosMovie.mp4

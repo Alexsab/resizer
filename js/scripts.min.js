@@ -60,40 +60,40 @@ document.addEventListener("DOMContentLoaded", function() {
 	    setCookie(name, null, { expires: -1 })
 	}
 
-	var env = 'dev2';
-	var serviceToken = "";
+	var videos = [
+    	{'success': true, 'size': 'H', 'renderId': 1, 'file': 'uploads/thanosMovie.mp4'}, 
+    	{'success': true, 'size': 'S', 'renderId': 1, 'file': 'uploads/1x1.mp4'}, 
+    	{'success': true, 'size': 'V', 'renderId': 1, 'file': 'uploads/916.mp4'}, 
+    	{'success': true, 'size': 'F', 'renderId': 1, 'file': 'uploads/4x5.mp4'}
+    ];
+    if(location.hostname == 'localhost') {
+    	videos = [
+	    	{'success': true, 'size': 'H', 'renderId': 1, 'file': 'uploads/thanosMovie.mp4'}, 
+	    	{'success': true, 'size': 'S', 'renderId': 1, 'file': 'uploads/1x1.mp4'}, 
+	    	{'success': true, 'size': 'V', 'renderId': 1, 'file': 'uploads/916.mp4'}, 
+	    	{'success': true, 'size': 'F', 'renderId': 1, 'file': 'uploads/4x5.mp4'}
+    	];
+    }	
 
-	// deleteCookie('serviceToken');
-	// localStorage.getItem('serviceToken')
-	// localStorage.setItem('serviceToken', '123')
-	
-	if((serviceToken = getCookie('serviceToken')).length > 15) {
-		console.log('You use token: ' + serviceToken);
+    var video = [];
+
+	if(localStorage.serviceToken === undefined) {
+		// localStorage.clear('env');
+		localStorage.env = prompt('Please enter service token:', 'dev2');
+	}
+	console.log('You use env: ' + localStorage.env);
+	if(localStorage.serviceToken === undefined || localStorage.serviceToken.length < 15) {
+		// localStorage.clear('serviceToken');
+		localStorage.serviceToken = prompt('Please enter service token:', 'gobbledygook'); 
+	}
+	if (localStorage.serviceToken === 'null') { 
+		console.log('User cancelled serviceToken, start example mode.'); 
 	} else {
-		serviceToken = prompt("Please enter service token:", "gobbledygook"); 
-		setCookie('serviceToken',serviceToken);
+		console.log('You use token: ' + localStorage.serviceToken);
 	}
-	if (serviceToken == null || serviceToken == "") { 
-		console.warn("User cancelled serviceToken, start example mode."); 
-	}
-	
-	/* * /
-	var $ = function(name) { 
-		if( document.querySelector(name) !== null ) {
-			if( document.querySelectorAll(name).length > 1 ) {
-				return document.querySelectorAll(name);
-			}
-			return document.querySelector(name);
-		}
-		return null;
-	}
-	/**/
 
 	var $ = function(name) { return document.querySelector(name) }
 	var $$ = function(name) { return document.querySelectorAll(name) }
-
-	document.querySelectorAll('.resizer-social-option.stepA.show')
-	document.querySelector('.resizer-social-option.stepA.show')
 
 	/**
 	 * добавить или удалить класс у всех элементов
@@ -132,8 +132,9 @@ document.addEventListener("DOMContentLoaded", function() {
 			// Снимаем выделение с других кнопок размера, они становятся цветными
 			toggleColorClass('.resizer-social-option.stepA input');
 
-	        $('.video-uploaded .resizer-fit-preview').classList.remove('resizer-fit-11','resizer-fit-916','resizer-fit-169','resizer-fit-45');
+	        $('.video-uploaded .resizer-fit-preview').classList.remove('resizer-fit-S','resizer-fit-V','resizer-fit-H','resizer-fit-F');
 	        $('.video-uploaded .resizer-fit-preview').classList.add('resizer-fit-'+this.value);
+	        resizeFitPreview('resizer-fit-'+this.value);
 	        
 	        if(!this.parentNode.parentNode.classList.contains('hide')) {
 		        addOrRemoveClassToAll('.resizer-social-option.stepA', 'hide');
@@ -147,7 +148,6 @@ document.addEventListener("DOMContentLoaded", function() {
 	        this.parentNode.classList.toggle('color');
 	        this.parentNode.parentNode.classList.toggle('show');
 
-	        resizeFitPreview('resizer-fit-'+this.value);
 	    });
 	});
 
@@ -223,22 +223,22 @@ document.addEventListener("DOMContentLoaded", function() {
 	function resizeFitPreview(fitSizeClass) {
 		if(fitSizeClass === undefined) {
 			var div = $('.video-uploaded .resizer-fit-preview');
-			div.classList.remove('resizer-fit-preview', 'video-preview-container');
+			div.classList.remove('resizer-fit-preview', 'video-preview-container', 'bgblack');
 			fitSizeClass = div.classList[0];
-			div.classList.add('resizer-fit-preview', 'video-preview-container');
+			div.classList.add('resizer-fit-preview', 'video-preview-container', 'bgblack');
 		}
-
+		console.log('fitSizeClass : ' + fitSizeClass);
 		switch (fitSizeClass) {
-        	case "resizer-fit-11":
+        	case "resizer-fit-S":
         		$('.video-uploaded .'+fitSizeClass).style.height = $('.video-uploaded .'+fitSizeClass).getBoundingClientRect().width+'px';
         		break;
-        	case "resizer-fit-916":
+        	case "resizer-fit-V":
         		$('.video-uploaded .'+fitSizeClass).style.height = $('.video-uploaded .'+fitSizeClass).getBoundingClientRect().width/9*16+'px';
         		break;
-        	case "resizer-fit-169":
+        	case "resizer-fit-H":
         		$('.video-uploaded .'+fitSizeClass).style.height = $('.video-uploaded .'+fitSizeClass).getBoundingClientRect().width/16*9+'px';
         		break;
-        	case "resizer-fit-45":
+        	case "resizer-fit-F":
         		$('.video-uploaded .'+fitSizeClass).style.height = $('.video-uploaded .'+fitSizeClass).getBoundingClientRect().width/4*5+'px';
         		break;
         	default:
@@ -264,9 +264,13 @@ document.addEventListener("DOMContentLoaded", function() {
 	  filesizeBase: 1000,
 	  acceptedFiles: '.mp4',
 	  
+	  renameFile: function(file) {
+	  	return Date.now() + '_' + file.name;
+	  },
+
 	  init: function () {
 		this.on("error", function(file) {
-		    // alert("error");
+		    console.error("smth error w " + file.name);
 		});
 		/*
 		this.on("drop", function(file) {
@@ -282,47 +286,44 @@ document.addEventListener("DOMContentLoaded", function() {
 			progressBar.animate(0.8);
 		});
 		*/
-		this.on("error", function(file) {
-
-		});
-		this.on("success", function(file) {
+		this.on("success", function(file, response) {
 		    // alert("complete");
 		    $('#dropzone').style.display = 'none';
 		    $('.video-uploaded').style.display = 'initial';
 
-		    var videos = [
-		    	'uploads/thanosMovie.mp4', 
-		    	'uploads/1x1.mp4', 
-		    	'uploads/916.mp4', 
-		    	'uploads/4x5.mp4'
-		    ];
-		    if(location.hostname == 'localhost') {
-		    	videos = [
-		    		'uploads/thanosMovie.mp4', 
-		    		'uploads/1x1.mp4', 
-		    		'uploads/916.mp4', 
-		    		'uploads/4x5.mp4'
-		    	];
-		    }
-		    if(parseInt(sessionStorage.numVideo) < videos.length-1) {
-		    	sessionStorage.setItem('numVideo', parseInt(sessionStorage.numVideo)+1);
+		    // console.log([file, response]);
+
+		    video['src'] = '';
+
+		    if(response.success) {
+		    	video['src'] = response.file;
+		    	video['size'] = response.R;
 		    } else {
-		    	sessionStorage.setItem('numVideo', 0);
-		    }
+		    	if(parseInt(sessionStorage.numVideo) < videos.length-1) {
+			    	sessionStorage.setItem('numVideo', parseInt(sessionStorage.numVideo)+1);
+			    } else {
+			    	sessionStorage.setItem('numVideo', 0);
+			    }
+		    	video['src'] = videos[sessionStorage.numVideo].file;
+		    	video['size'] = videos[sessionStorage.numVideo].R;
+			}
 		    var divVideo = '<video class="resizer-fit-video" muted loop="" autoplay="" preload="auto" playsinline="" style="">\
-					<source src="'+videos[sessionStorage.numVideo]+'" type="video/mp4" />\
+					<source src="'+video['src']+'" type="video/mp4" />\
 				</video>';
-			$('.video-uploaded  .resizer-fit-preview').innerHTML = divVideo;
-			$('.video-uploaded  .resizer-fit-preview').innerHTML += divVideo;
-			$$('.video-uploaded  .resizer-fit-video')[0].classList.add('first');
-			$$('.video-uploaded  .resizer-fit-video')[1].classList.add('second', 'hide');
-		    resizeFitPreview();
+			$('.video-uploaded .resizer-fit-preview').innerHTML = divVideo;
+			$('.video-uploaded .resizer-fit-preview').innerHTML += divVideo;
+			$('.video-uploaded .resizer-fit-preview').classList.add('resizer-fit-'+video['size']);
+			$$('.video-uploaded .resizer-fit-video')[0].classList.add('first');
+			$$('.video-uploaded .resizer-fit-video')[1].classList.add('second', 'hide');
+		    resizeFitPreview('resizer-fit-'+video['size']);
 		    
 		    $$('.resizer-social-option input:disabled').forEach(function(element) {
 				if(element.disabled === true) {
 					element.disabled = false;
 			        // element.parentNode.classList.remove('checked');
-			        element.parentNode.classList.add('color');
+			        if(element.value != video['size']) {
+				        element.parentNode.classList.add('color');
+			        }
 			    };
 			});
 		});
@@ -330,6 +331,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 	});
 
+    if(location.hostname != 'localhost') {
 	// Now fake the file upload, since GitHub does not handle file uploads
 	// and returns a 404
 
@@ -368,6 +370,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	      }(file, totalSteps, step), duration);
 	    }
 	  }
+	}
 	}
 
 });
