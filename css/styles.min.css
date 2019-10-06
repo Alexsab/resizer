@@ -951,7 +951,7 @@ body {
 }
 
 .resizer-social-option label.checked {
-  background: #999999;
+  color: #e91e63;
 }
 
 .resizer-social-option.stepC .color:hover {

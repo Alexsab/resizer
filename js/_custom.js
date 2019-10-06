@@ -119,7 +119,9 @@ document.addEventListener("DOMContentLoaded", function() {
 		$$(selector).forEach(function(element) {
 			if(element.checked === false) {
 		        // element.parentNode.classList.remove('checked');
-		        element.parentNode.classList.add('color');
+		        if(element.value != video['size']) {
+			        element.parentNode.classList.add('color');
+		        }
 		    };
 		});
 	}
@@ -130,12 +132,13 @@ document.addEventListener("DOMContentLoaded", function() {
 	$$('.resizer-social-option.stepA input').forEach(function(element) {
 		element.addEventListener('click', function(event) {
 			// Снимаем выделение с других кнопок размера, они становятся цветными
-			toggleColorClass('.resizer-social-option.stepA input');
+			// toggleColorClass('.resizer-social-option.stepA input');
 
 	        $('.video-uploaded .resizer-fit-preview').classList.remove('resizer-fit-S','resizer-fit-V','resizer-fit-H','resizer-fit-F');
 	        $('.video-uploaded .resizer-fit-preview').classList.add('resizer-fit-'+this.value);
 	        resizeFitPreview('resizer-fit-'+this.value);
 	        
+
 	        if(!this.parentNode.parentNode.classList.contains('hide')) {
 		        addOrRemoveClassToAll('.resizer-social-option.stepA', 'hide');
 		        addOrRemoveClassToAll('.resizer-social-option.stepB', '', 'hide');
@@ -144,7 +147,28 @@ document.addEventListener("DOMContentLoaded", function() {
 		        addOrRemoveClassToAll('.resizer-social-option.stepB', 'hide');
 	        }
 
-	        // this.parentNode.classList.add('checked');
+	        switch(video['size']+"_"+this.value) {
+	        	case "H_S":
+	        	case "H_F":
+	        	case "H_V":
+	        	case "S_F":
+	        	case "S_V":
+	        	case "F_V":
+	        		// blur
+	        		$('.resizer-social-option.stepB input[value="blur"]').click();
+	        		break;
+	        	case "V_F":
+	        	case "V_S":
+	        	case "V_H":
+	        	case "F_S":
+	        	case "F_H":
+	        	case "S_H":
+		        	// crop
+		        	$('.resizer-social-option.stepB input[value="crop"]').click();
+	        		break;
+	        	default:
+	        }
+	        this.parentNode.classList.toggle('checked');
 	        this.parentNode.classList.toggle('color');
 	        this.parentNode.parentNode.classList.toggle('show');
 
@@ -158,14 +182,18 @@ document.addEventListener("DOMContentLoaded", function() {
 		element.addEventListener('click', function(event) {
 
 			if(element.value === 'crop') {
-				$('.video-uploaded .resizer-fit-video.first').classList.toggle('cover');
-				$('.video-uploaded .resizer-fit-preview').classList.toggle('bgblack');
+				// $('.video-uploaded .resizer-fit-video.first').classList.toggle('cover');
+				// $('.video-uploaded .resizer-fit-preview').classList.toggle('bgblack');
+				$('.video-uploaded .resizer-fit-video.first').classList.add('cover');
+				$('.video-uploaded .resizer-fit-preview').classList.remove('bgblack');
 				$('.video-uploaded .resizer-fit-video.second').classList.remove('blur');
 				$('.video-uploaded .resizer-fit-video.second').classList.add('hide');
 			}
 			if(element.value === 'blur') {
-				$('.video-uploaded .resizer-fit-video.second').classList.toggle('blur');
-				$('.video-uploaded .resizer-fit-video.second').classList.toggle('hide');
+				// $('.video-uploaded .resizer-fit-video.second').classList.toggle('blur');
+				// $('.video-uploaded .resizer-fit-video.second').classList.toggle('hide');
+				$('.video-uploaded .resizer-fit-video.second').classList.add('blur');
+				$('.video-uploaded .resizer-fit-video.second').classList.remove('hide');
 				if($('.video-uploaded .resizer-fit-video.second').classList.contains('blur')) {
 					$('.video-uploaded .resizer-fit-video.second').pause();
 					$('.video-uploaded .resizer-fit-video.first').pause();
@@ -182,7 +210,8 @@ document.addEventListener("DOMContentLoaded", function() {
 				addOrRemoveClassToAll('.resizer-social-option.stepC', '', 'hide');
 			} else {
 				toggleColorClass('.resizer-social-option.stepB input');
-				this.parentNode.classList.toggle('color');
+				// this.parentNode.classList.toggle('color');
+				this.parentNode.classList.remove('color');
 			}
 
 	    });
@@ -198,6 +227,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 			if(element.value === 'new') {
 				addOrRemoveClassToAll('.resizer-social-option.stepA', '', 'hide');
+				addOrRemoveClassToAll('.resizer-social-option.stepA label', '', 'checked');
 				addOrRemoveClassToAll('.resizer-social-option.stepC', 'hide');
 			    $('#dropzone').style.display = '';
 			    $('.video-uploaded').style.display = '';
@@ -227,7 +257,6 @@ document.addEventListener("DOMContentLoaded", function() {
 			fitSizeClass = div.classList[0];
 			div.classList.add('resizer-fit-preview', 'video-preview-container', 'bgblack');
 		}
-		console.log('fitSizeClass : ' + fitSizeClass);
 		switch (fitSizeClass) {
         	case "resizer-fit-S":
         		$('.video-uploaded .'+fitSizeClass).style.height = $('.video-uploaded .'+fitSizeClass).getBoundingClientRect().width+'px';
@@ -319,9 +348,9 @@ document.addEventListener("DOMContentLoaded", function() {
 		    
 		    $$('.resizer-social-option input:disabled').forEach(function(element) {
 				if(element.disabled === true) {
-					element.disabled = false;
-			        // element.parentNode.classList.remove('checked');
 			        if(element.value != video['size']) {
+						element.disabled = false;
+				        // element.parentNode.classList.remove('checked');
 				        element.parentNode.classList.add('color');
 			        }
 			    };
