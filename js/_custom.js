@@ -323,6 +323,7 @@ document.addEventListener("DOMContentLoaded", function() {
 		    // console.log([file, response]);
 
 		    video['src'] = '';
+		    video['size'] = '';
 
 		    if(response.success) {
 		    	video['src'] = response.file;
