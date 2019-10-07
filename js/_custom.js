@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	if(window.location.search.substring(1)=='clear') {
 		localStorage.clear('env');
 		localStorage.clear('serviceToken');
+		window.history.pushState("", "", '/');
 	}
 
 	/**
@@ -288,7 +289,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	Dropzone.autoDiscover = false;
 
 	var dropzoneItem = new Dropzone('#video_upload', {
-	  url: (localStorage.env == 'dev2' && location.hostname != 'localhost')?'https://'+localStorage.env+'.roasup.com/api/videoResizer/filesUpload':'/upload.php',
+	  url: (localStorage.env == 'dev2' || location.hostname != 'localhost')?'https://'+localStorage.env+'.roasup.com/api/videoResizer/filesUpload':'/upload.php',
 	  previewTemplate: $('#preview-template').innerHTML,
 	  parallelUploads: 1,
 	  uploadMultiple: false,
@@ -302,7 +303,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	  renameFile: function(file) {
 	  	return Date.now() + '_' + file.name;
 	  },
-	  params: { 'serviceToken' : localStorage.serviceToken },
+	  // params: { 'serviceToken' : localStorage.serviceToken },
 	  init: function () {
 		this.on("error", function(file) {
 		    console.error("smth error w " + file.name);
@@ -321,6 +322,9 @@ document.addEventListener("DOMContentLoaded", function() {
 			progressBar.animate(0.8);
 		});
 		*/
+		this.on("sending", function(file, xhr, formData) {
+			formData.append("serviceToken", localStorage.serviceToken);
+		});
 		this.on("success", function(file, response) {
 		    // alert("complete");
 		    $('#dropzone').style.display = 'none';
