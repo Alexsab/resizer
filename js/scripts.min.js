@@ -1,5 +1,10 @@
 document.addEventListener("DOMContentLoaded", function() {
 
+	if(window.location.search.substring(1)=='clear') {
+		localStorage.clear('env');
+		localStorage.clear('serviceToken');
+	}
+
 	/**
 	 * возвращает cookie если есть или undefined
 	 * @param  {[type]} name название cookie
@@ -77,9 +82,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
     var video = [];
 
-	if(localStorage.serviceToken === undefined) {
+	if(localStorage.env === undefined || localStorage.env === 'null') {
 		// localStorage.clear('env');
-		localStorage.env = prompt('Please enter service token:', 'dev2');
+		localStorage.env = prompt('Please enter env:', 'test');
 	}
 	console.log('You use env: ' + localStorage.env);
 	if(localStorage.serviceToken === undefined || localStorage.serviceToken.length < 15) {
@@ -283,7 +288,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	Dropzone.autoDiscover = false;
 
 	var dropzoneItem = new Dropzone('#video_upload', {
-	  url: (location.hostname != 'localhost')?'https://'+localStorage.env+'.roasup.com/api/videoResizer/filesUpload':'/upload.php', 
+	  url: (localStorage.env == 'dev2' && location.hostname != 'localhost')?'https://'+localStorage.env+'.roasup.com/api/videoResizer/filesUpload':'/upload.php',
 	  previewTemplate: $('#preview-template').innerHTML,
 	  parallelUploads: 1,
 	  uploadMultiple: false,
@@ -293,11 +298,11 @@ document.addEventListener("DOMContentLoaded", function() {
 	  thumbnailWidth: 120,
 	  filesizeBase: 1000,
 	  acceptedFiles: '.mp4',
-	  
+
 	  renameFile: function(file) {
 	  	return Date.now() + '_' + file.name;
 	  },
-
+	  params: { 'serviceToken' : localStorage.serviceToken },
 	  init: function () {
 		this.on("error", function(file) {
 		    console.error("smth error w " + file.name);
@@ -362,7 +367,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 	});
 
-    if(location.hostname != 'localhost') {
+    if(location.hostname != 'localhost' && localStorage.env != 'dev2') {
 	// Now fake the file upload, since GitHub does not handle file uploads
 	// and returns a 404
 
