@@ -929,6 +929,7 @@ body {
   color: white;
   font-size: 3vw;
   margin: 0;
+  line-height: 0;
   background: #999999;
 }
 
@@ -956,6 +957,10 @@ body {
 
 .resizer-social-option.stepC .color:hover {
   background: #999999;
+}
+
+.resizer-social-option.stepA label {
+  font-size: 9vw;
 }
 
 .resizer-social-option.right {

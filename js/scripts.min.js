@@ -1,5 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
 
+	/* work with settings start */
+
 	if(window.location.search.substring(1)=='clear') {
 		localStorage.clear('env');
 		localStorage.clear('serviceToken');
@@ -66,30 +68,11 @@ document.addEventListener("DOMContentLoaded", function() {
 	    setCookie(name, null, { expires: -1 })
 	}
 
-	var videos = [
-    	{'success': true, 'R': 'H', 'renderId': 1, 'file': 'uploads/thanosMovie.mp4'}, 
-    	{'success': true, 'R': 'S', 'renderId': 1, 'file': 'uploads/1x1.mp4'}, 
-    	{'success': true, 'R': 'V', 'renderId': 1, 'file': 'uploads/916.mp4'}, 
-    	{'success': true, 'R': 'F', 'renderId': 1, 'file': 'uploads/4x5.mp4'}
-    ];
-    if(location.hostname == 'localhost') {
-    	videos = [
-	    	{'success': true, 'R': 'H', 'renderId': 1, 'file': 'uploads/thanosMovie.mp4'}, 
-	    	{'success': true, 'R': 'S', 'renderId': 1, 'file': 'uploads/1x1.mp4'}, 
-	    	{'success': true, 'R': 'V', 'renderId': 1, 'file': 'uploads/916.mp4'}, 
-	    	{'success': true, 'R': 'F', 'renderId': 1, 'file': 'uploads/4x5.mp4'}
-    	];
-    }	
-
-    var video = [];
-
 	if(localStorage.env === undefined || localStorage.env === 'null') {
-		// localStorage.clear('env');
 		localStorage.env = prompt('Please enter env:', 'test');
 	}
 	console.log('You use env: ' + localStorage.env);
 	if(localStorage.serviceToken === undefined || localStorage.serviceToken.length < 15) {
-		// localStorage.clear('serviceToken');
 		localStorage.serviceToken = prompt('Please enter service token:', 'gobbledygook'); 
 	}
 	if (localStorage.serviceToken === 'null') { 
@@ -98,8 +81,34 @@ document.addEventListener("DOMContentLoaded", function() {
 		console.log('You use token: ' + localStorage.serviceToken);
 	}
 
-	var $ = function(name) { return document.querySelector(name) }
-	var $$ = function(name) { return document.querySelectorAll(name) }
+    const env = 'dev2';
+
+	/* work with settings end */
+
+	var videos = [
+    	{success: true, R: 'H', renderId: 1, file: 'uploads/thanosMovie.mp4'}, 
+    	{success: true, R: 'S', renderId: 1, file: 'uploads/1x1.mp4'}, 
+    	{success: true, R: 'V', renderId: 1, file: 'uploads/916.mp4'}, 
+    	{success: true, R: 'F', renderId: 1, file: 'uploads/4x5.mp4'}
+    ],
+	filesUploadResult = {
+		src : '',
+		size : ''
+	},
+	startRender = {
+    	serviceToken : localStorage.serviceToken,
+		renderId : '',
+		sizeReq : '',
+		effectReq : ''
+    },
+    checkStatusId,
+    checkStatus = {
+    	serviceToken : localStorage.serviceToken,
+    	uid : '',
+    	yandex : ''
+    },
+    $ = function(name) { return document.querySelector(name) },
+	$$ = function(name) { return document.querySelectorAll(name) };
 
 	/**
 	 * добавить или удалить класс у всех элементов
@@ -125,10 +134,30 @@ document.addEventListener("DOMContentLoaded", function() {
 		$$(selector).forEach(function(element) {
 			if(element.checked === false) {
 		        // element.parentNode.classList.remove('checked');
-		        if(element.value != video['size']) {
+		        if(element.value != filesUploadResult.size) {
 			        element.parentNode.classList.add('color');
 		        }
 		    };
+		});
+	}
+
+	function btnsDisable(selector, status) {
+		$$(selector).forEach(function(element) {
+			switch (status) {
+				case 'disable':
+					element.disabled = true;
+			        // element.parentNode.classList.remove('checked');
+			        element.parentNode.classList.remove('color');
+				   	break
+				case 'enable':
+			        if(element.value != filesUploadResult.size) {
+						element.disabled = false;
+				        // element.parentNode.classList.remove('checked');
+				        element.parentNode.classList.add('color');
+			        }
+				   	break
+				default:
+			}
 		});
 	}
 
@@ -144,6 +173,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	        $('.video-uploaded .resizer-fit-preview').classList.add('resizer-fit-'+this.value);
 	        resizeFitPreview('resizer-fit-'+this.value);
 	        
+	        startRender.sizeReq = this.value;
 
 	        if(!this.parentNode.parentNode.classList.contains('hide')) {
 		        addOrRemoveClassToAll('.resizer-social-option.stepA', 'hide');
@@ -153,7 +183,7 @@ document.addEventListener("DOMContentLoaded", function() {
 		        addOrRemoveClassToAll('.resizer-social-option.stepB', 'hide');
 	        }
 
-	        switch(video['size']+"_"+this.value) {
+	        switch(filesUploadResult.size+"_"+this.value) {
 	        	case "H_S":
 	        	case "H_F":
 	        	case "H_V":
@@ -187,34 +217,51 @@ document.addEventListener("DOMContentLoaded", function() {
 	$$('.resizer-social-option.stepB input').forEach(function(element) {
 		element.addEventListener('click', function(event) {
 
-			if(element.value === 'crop') {
-				// $('.video-uploaded .resizer-fit-video.first').classList.toggle('cover');
-				// $('.video-uploaded .resizer-fit-preview').classList.toggle('bgblack');
-				$('.video-uploaded .resizer-fit-video.first').classList.add('cover');
-				$('.video-uploaded .resizer-fit-preview').classList.remove('bgblack');
-				$('.video-uploaded .resizer-fit-video.second').classList.remove('blur');
-				$('.video-uploaded .resizer-fit-video.second').classList.add('hide');
-			}
-			if(element.value === 'blur') {
-				// $('.video-uploaded .resizer-fit-video.second').classList.toggle('blur');
-				// $('.video-uploaded .resizer-fit-video.second').classList.toggle('hide');
-				$('.video-uploaded .resizer-fit-video.second').classList.add('blur');
-				$('.video-uploaded .resizer-fit-video.second').classList.remove('hide');
-				if($('.video-uploaded .resizer-fit-video.second').classList.contains('blur')) {
-					$('.video-uploaded .resizer-fit-video.second').pause();
-					$('.video-uploaded .resizer-fit-video.first').pause();
-					$('.video-uploaded .resizer-fit-video.second').currentTime = $('.video-uploaded .resizer-fit-video.first').currentTime;
-					$('.video-uploaded .resizer-fit-video.second').play();
-					$('.video-uploaded .resizer-fit-video.first').play();
+			if(this.value === 'render') {
+				if(localStorage.env == env) {
+					this.disabled = true;
+					postData('https://'+localStorage.env+'.roasup.com/api/videoResizer/startRender', startRender)
+						.then(function(data) {
+							console.log(data)
+							if(data.success) {
+						        $('.resizer-social-option.stepB label:not(.color)').classList.toggle('checked');
+								btnsDisable('.resizer-social-option input','disable');
+								checkStatusId = setInterval(checkStatusVideo, 1000);
+								checkStatus.uid = data.uid;
+							}
+						}) // JSON-строка полученная после вызова `response.json()`
+						.catch(error => console.error(error));
 				}
-				$('.video-uploaded .resizer-fit-preview').classList.add('bgblack');
-				$('.video-uploaded .resizer-fit-video.first').classList.remove('cover');
-			}
-			if(element.value === 'render') {
-				addOrRemoveClassToAll('.resizer-social-option.stepA.show', '', 'show');
-				addOrRemoveClassToAll('.resizer-social-option.stepB', 'hide');
-				addOrRemoveClassToAll('.resizer-social-option.stepC', '', 'hide');
 			} else {
+				startRender.effectReq = this.value;
+
+				switch (this.value) {
+					case 'crop':
+						// $('.video-uploaded .resizer-fit-video.first').classList.toggle('cover');
+						// $('.video-uploaded .resizer-fit-preview').classList.toggle('bgblack');
+						$('.video-uploaded .resizer-fit-video.first').classList.add('cover');
+						$('.video-uploaded .resizer-fit-preview').classList.remove('bgblack');
+						$('.video-uploaded .resizer-fit-video.second').classList.remove('blur');
+						$('.video-uploaded .resizer-fit-video.second').classList.add('hide');
+					break;
+					case 'blur':
+						// $('.video-uploaded .resizer-fit-video.second').classList.toggle('blur');
+						// $('.video-uploaded .resizer-fit-video.second').classList.toggle('hide');
+						$('.video-uploaded .resizer-fit-video.second').classList.add('blur');
+						$('.video-uploaded .resizer-fit-video.second').classList.remove('hide');
+						if($('.video-uploaded .resizer-fit-video.second').classList.contains('blur')) {
+							$('.video-uploaded .resizer-fit-video.second').pause();
+							$('.video-uploaded .resizer-fit-video.first').pause();
+							$('.video-uploaded .resizer-fit-video.second').currentTime = $('.video-uploaded .resizer-fit-video.first').currentTime;
+							$('.video-uploaded .resizer-fit-video.second').play();
+							$('.video-uploaded .resizer-fit-video.first').play();
+						}
+						$('.video-uploaded .resizer-fit-preview').classList.add('bgblack');
+						$('.video-uploaded .resizer-fit-video.first').classList.remove('cover');
+					break;
+					default:
+				}
+
 				toggleColorClass('.resizer-social-option.stepB input');
 				// this.parentNode.classList.toggle('color');
 				this.parentNode.classList.remove('color');
@@ -230,23 +277,28 @@ document.addEventListener("DOMContentLoaded", function() {
 		element.addEventListener('click', function(event) {
 			// toggleColorClass('.resizer-social-option.stepC input');
 			// this.parentNode.classList.toggle('color');
-
-			if(element.value === 'new') {
-				addOrRemoveClassToAll('.resizer-social-option.stepA', '', 'hide');
-				addOrRemoveClassToAll('.resizer-social-option.stepA label', '', 'checked');
-				addOrRemoveClassToAll('.resizer-social-option.stepC', 'hide');
-			    $('#dropzone').style.display = '';
-			    $('.video-uploaded').style.display = '';
-			    // addOrRemoveClassToAll('.resizer-social-option radio-label').classList.remove('color');
-				
-				dropzoneItem.removeAllFiles();
-				$$('.resizer-social-option input').forEach(function(element) {
-					if(element.disabled === false) {
-						element.disabled = true;
-				        // element.parentNode.classList.remove('checked');
-				        element.parentNode.classList.remove('color');
-				    };
-				});
+			switch (this.value) {
+				case 'yadisk':
+					window.open(checkStatus.yandex);
+					break;
+				case 'share':
+					copyToClipboard(checkStatus.yandex);
+					window.prompt("Copy to clipboard: Ctrl+C, Enter", checkStatus.yandex);
+					break;
+				case 'download':
+					break;
+				case 'new':
+					addOrRemoveClassToAll('.resizer-social-option.stepA', '', 'hide');
+					addOrRemoveClassToAll('.resizer-social-option.stepA label', '', 'checked');
+					addOrRemoveClassToAll('.resizer-social-option.stepC', 'hide');
+				    $('#dropzone').style.display = '';
+				    $('.video-uploaded').style.display = '';
+				    // addOrRemoveClassToAll('.resizer-social-option radio-label').classList.remove('color');
+					
+					dropzoneItem.removeAllFiles();
+					btnsDisable('.resizer-social-option input','disable');
+					break;
+				default:
 			}
 	    });
 	});
@@ -280,7 +332,39 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 	}
 
+	/**
+	 * проверка состояния видео
+	 * @return {[type]} [description]
+	 */
+	function checkStatusVideo() {
+		if(localStorage.env == env) {
+			postData('https://'+localStorage.env+'.roasup.com/api/videoResizer/checkStatus', checkStatus)
+				.then(function(data) {
+					console.log(data.task)
+					if(data.task == 'Finish') {
+						clearInterval(checkStatusId);
+						checkStatus.yandex = data.yandex;
+						addOrRemoveClassToAll('.resizer-social-option.stepA.show', '', 'show');
+						addOrRemoveClassToAll('.resizer-social-option.stepB', 'hide');
+						addOrRemoveClassToAll('.resizer-social-option.stepC', '', 'hide');
+						btnsDisable('.resizer-social-option input:disabled','enable');
+					}
+				}) // JSON-строка полученная после вызова `response.json()`
+				.catch(error => console.error(error));
+		}
+	}
 
+	const copyToClipboard = str => {
+		const el = document.createElement('textarea');
+		el.value = str;
+		el.setAttribute('readonly', '');
+		el.style.position = 'absolute';
+		el.style.left = '-9999px';
+		document.body.appendChild(el);
+		el.select();
+		document.execCommand('copy');
+		document.body.removeChild(el);
+	};
 
 	/**
 	 * Настройки для области захвата файлов
@@ -289,7 +373,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	Dropzone.autoDiscover = false;
 
 	var dropzoneItem = new Dropzone('#video_upload', {
-	  url: (localStorage.env == 'dev2' || location.hostname != 'localhost')?'https://'+localStorage.env+'.roasup.com/api/videoResizer/filesUpload':'/upload.php',
+	  url: (localStorage.env == env)?'https://'+localStorage.env+'.roasup.com/api/videoResizer/filesUpload':'/upload.php',
 	  previewTemplate: $('#preview-template').innerHTML,
 	  parallelUploads: 1,
 	  uploadMultiple: false,
@@ -326,91 +410,106 @@ document.addEventListener("DOMContentLoaded", function() {
 			formData.append("serviceToken", localStorage.serviceToken);
 		});
 		this.on("success", function(file, response) {
-		    // alert("complete");
-		    $('#dropzone').style.display = 'none';
-		    $('.video-uploaded').style.display = 'initial';
 
-		    // console.log([file, response]);
+		    console.log([file, response]);
 
-		    video['src'] = '';
-		    video['size'] = '';
+		    filesUploadResult.src = '';
+		    filesUploadResult.size = '';
 
 		    if(response.success) {
-		    	video['src'] = response.file;
-		    	video['size'] = response.R;
+		    	filesUploadResult.src = response.file;
+		    	filesUploadResult.size = response.R;
+		    	startRender.renderId = response.renderId;
+		    	checkStatus.renderId = response.renderId;
+
+			    $('#dropzone').style.display = 'none';
+			    $('.video-uploaded').style.display = 'initial';
+			    var divVideo = '<video class="resizer-fit-video" muted loop="" autoplay="" preload="auto" playsinline="" style="">\
+						<source src="'+filesUploadResult.src+'" type="video/mp4" />\
+					</video>';
+				$('.video-uploaded .resizer-fit-preview').innerHTML = divVideo;
+				$('.video-uploaded .resizer-fit-preview').innerHTML += divVideo;
+				$('.video-uploaded .resizer-fit-preview').classList.add('resizer-fit-'+filesUploadResult.size);
+				$$('.video-uploaded .resizer-fit-video')[0].classList.add('first');
+				$$('.video-uploaded .resizer-fit-video')[1].classList.add('second', 'hide');
+			    resizeFitPreview('resizer-fit-'+filesUploadResult.size);
+			    
+			    btnsDisable('.resizer-social-option input:disabled','enable');
 		    } else {
-		    	if(parseInt(sessionStorage.numVideo) < videos.length-1) {
-			    	sessionStorage.setItem('numVideo', parseInt(sessionStorage.numVideo)+1);
-			    } else {
-			    	sessionStorage.setItem('numVideo', 0);
-			    }
-		    	video['src'] = videos[sessionStorage.numVideo].file;
-		    	video['size'] = videos[sessionStorage.numVideo].R;
+
 			}
-		    var divVideo = '<video class="resizer-fit-video" muted loop="" autoplay="" preload="auto" playsinline="" style="">\
-					<source src="'+video['src']+'" type="video/mp4" />\
-				</video>';
-			$('.video-uploaded .resizer-fit-preview').innerHTML = divVideo;
-			$('.video-uploaded .resizer-fit-preview').innerHTML += divVideo;
-			$('.video-uploaded .resizer-fit-preview').classList.add('resizer-fit-'+video['size']);
-			$$('.video-uploaded .resizer-fit-video')[0].classList.add('first');
-			$$('.video-uploaded .resizer-fit-video')[1].classList.add('second', 'hide');
-		    resizeFitPreview('resizer-fit-'+video['size']);
-		    
-		    $$('.resizer-social-option input:disabled').forEach(function(element) {
-				if(element.disabled === true) {
-			        if(element.value != video['size']) {
-						element.disabled = false;
-				        // element.parentNode.classList.remove('checked');
-				        element.parentNode.classList.add('color');
-			        }
-			    };
-			});
+
 		});
 	  }
 
 	});
 
-    if(location.hostname != 'localhost' && localStorage.env != 'dev2') {
-	// Now fake the file upload, since GitHub does not handle file uploads
-	// and returns a 404
+    if(localStorage.env != env) {
+		// Now fake the file upload, since GitHub does not handle file uploads
+		// and returns a 404
 
-	var minSteps = 25,
-	    maxSteps = 50,
-	    timeBetweenSteps = 100,
-	    bytesPerStep = 100000;
+		var minSteps = 25,
+		    maxSteps = 50,
+		    timeBetweenSteps = 100,
+		    bytesPerStep = 100000;
 
-	dropzoneItem.uploadFiles = function(files) {
-	  var self = this;
+		dropzoneItem.uploadFiles = function(files) {
+		  var self = this;
 
-	  for (var i = 0; i < files.length; i++) {
+		  for (var i = 0; i < files.length; i++) {
 
-	    var file = files[i];
-	    totalSteps = Math.round(Math.min(maxSteps, Math.max(minSteps, file.size / bytesPerStep)));
+		    var file = files[i];
+		    totalSteps = Math.round(Math.min(maxSteps, Math.max(minSteps, file.size / bytesPerStep)));
 
-	    for (var step = 0; step < totalSteps; step++) {
-	      var duration = timeBetweenSteps * (step + 1);
-	      setTimeout(function(file, totalSteps, step) {
-	        return function() {
-	          file.upload = {
-	            progress: 100 * (step + 1) / totalSteps,
-	            total: file.size,
-	            bytesSent: (step + 1) * file.size / totalSteps
-	          };
+		    for (var step = 0; step < totalSteps; step++) {
+		      var duration = timeBetweenSteps * (step + 1);
+		      setTimeout(function(file, totalSteps, step) {
+		        return function() {
+		          file.upload = {
+		            progress: 100 * (step + 1) / totalSteps,
+		            total: file.size,
+		            bytesSent: (step + 1) * file.size / totalSteps
+		          };
 
-	          self.emit('uploadprogress', file, file.upload.progress, file.upload.bytesSent);
-	          if (file.upload.progress == 100) {
-	            file.status = Dropzone.SUCCESS;
-	            self.emit("success", file, 'success', null);
-	            self.emit("complete", file);
-	            self.processQueue();
-	            //document.getElementsByClassName("dz-success-mark").style.opacity = "1";
-	          }
-	        };
-	      }(file, totalSteps, step), duration);
-	    }
-	  }
+		          self.emit('uploadprogress', file, file.upload.progress, file.upload.bytesSent);
+		          if (file.upload.progress == 100) {
+
+  			    	if(parseInt(sessionStorage.numVideo) < videos.length-1) {
+				    	sessionStorage.setItem('numVideo', parseInt(sessionStorage.numVideo)+1);
+				    } else {
+				    	sessionStorage.setItem('numVideo', 0);
+				    }
+
+		            file.status = Dropzone.SUCCESS;
+		            self.emit("success", file, videos[sessionStorage.numVideo], null);
+		            self.emit("complete", file);
+		            self.processQueue();
+		            //document.getElementsByClassName("dz-success-mark").style.opacity = "1";
+		          }
+		        };
+		      }(file, totalSteps, step), duration);
+		    }
+		  }
+		}
 	}
+
+	function postData(url = '', data = {}) {
+		// Значения по умолчанию обозначены знаком *
+	    return fetch(url, {
+	        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+	        mode: 'cors', // no-cors, cors, *same-origin
+	        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+	        // credentials: 'same-origin', // include, *same-origin, omit
+	        headers: {
+	            'Content-Type': 'application/json',
+	            // 'Content-Type': 'application/x-www-form-urlencoded',
+	        },
+	        // redirect: 'follow', // manual, *follow, error
+	        referrer: 'no-referrer', // no-referrer, *client
+	        body: JSON.stringify(data), 
+	        // body: Object.keys(data).map(key => key + '=' + data[key]).join('&'), // тип данных в body должен соответвовать значению заголовка "Content-Type"
+	    })
+	    .then(response => response.json()); // парсит JSON ответ в Javascript объект
 	}
 
 });
