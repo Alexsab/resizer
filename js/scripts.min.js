@@ -329,6 +329,8 @@ document.addEventListener("DOMContentLoaded", function() {
 			clearInterval(checkStatusId);
 		dropzoneItem.removeAllFiles();
 		dropzoneItem.removeAllFiles(true);
+		$(".console").innerText = '';
+		$(".console").classList.add('hide');
 		btnsDisable('.resizer-social-option input','disable');
 		this.disabled = true;
 	});
