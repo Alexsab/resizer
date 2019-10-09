@@ -26,6 +26,7 @@ body
 	color: $text
 
 .grid
+	position: relative
 	display: grid
 	grid-template-columns: 1fr 1fr
 	grid-template-areas: "left right"
@@ -227,11 +228,13 @@ input[type="radio"]
 	display: flex
 
 
-.box
-	display: inline-block
+.box,
+.progress
 	position: absolute
-	width: 50%
-	height: 100%
+	top: 0
+	bottom: 0
+	left: 0
+	right: 0
 
 .progress
 	width: 100px
@@ -239,21 +242,52 @@ input[type="radio"]
 	display: flex
 	align-items: center
 	justify-content: center
-
 	overflow: auto
 	margin: auto
-	position: absolute
-	top: 0
-	left: 0
-	bottom: 0
-	right: 0
-
 	font-size: 2rem
 
-.progress > .inner
-	position: absolute
-	color: white
+	> .inner,
+	> .inner:before,
+	> .inner:after
+		position: absolute
+		width: 40px
+		height: 4px
+		border-radius: 4px
 
-.progress > svg
-	height: 100%
-	display: block
+	> .inner
+		color: white
+		transform: rotate(45deg)
+		&:before,
+		&:after
+			display: block
+			content: ""
+			background-color: #fff
+		&:before
+		&:after
+			bottom: 0
+			transform: rotate(-90deg)
+	> svg
+		height: 100%
+		display: block
+
+.console
+	position: absolute
+	bottom: 0
+	width: 100%
+	height: 15vh
+	font-size: 2em
+	color: $ruby
+	padding: 10px
+	overflow-y: scroll
+	&:before
+		display: block
+		content: ""
+		// background-color: $ruby
+		background-image: linear-gradient(to left, $ruby 73%, $ruby00 0%)
+		background-position: bottom
+		background-size: 50px 8px
+		background-repeat: repeat-x
+		width: 150px
+		height: 8px
+		position: fixed
+		bottom: 16vh

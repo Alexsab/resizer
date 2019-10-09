@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", function() {
 		localStorage.serviceToken = prompt('Please enter service token:', 'gobbledygook'); 
 	}
 	if (localStorage.serviceToken === 'null') { 
-		console.log('User cancelled serviceToken, start example mode.'); 
+		console.log('User canceled serviceToken, start example mode.'); 
 	} else {
 		console.log('You use token: ' + localStorage.serviceToken);
 	}
@@ -107,6 +107,12 @@ document.addEventListener("DOMContentLoaded", function() {
     	uid : '',
     	yandex : ''
     },
+    progressBar = new ProgressBar.Circle('#progress', {
+        color: '#e91e63',
+        strokeWidth: 50,
+        duration: 100, // milliseconds
+        easing: 'easeOut'
+    }),
     $ = function(name) { return document.querySelector(name) },
 	$$ = function(name) { return document.querySelectorAll(name) };
 
@@ -141,6 +147,12 @@ document.addEventListener("DOMContentLoaded", function() {
 		});
 	}
 
+	/**
+	 * отключает/включает все кнопки
+	 * @param  {[type]} selector [description]
+	 * @param  {[type]} status   [description]
+	 * @return {[type]}          [description]
+	 */
 	function btnsDisable(selector, status) {
 		$$(selector).forEach(function(element) {
 			switch (status) {
@@ -159,6 +171,14 @@ document.addEventListener("DOMContentLoaded", function() {
 				default:
 			}
 		});
+	}
+
+	function consoleLog(msg) {
+		var consoleDiv = document.querySelector(".console");
+		var date = new Date();
+		if(consoleDiv.innerText == "") consoleDiv.classList.remove('hide');
+		consoleDiv.innerText += date.getMinutes() + ":" + date.getSeconds() + ": " + msg + "\n";
+		consoleDiv.scrollTop = consoleDiv.scrollHeight;
 	}
 
 	/**
@@ -223,6 +243,7 @@ document.addEventListener("DOMContentLoaded", function() {
 					postData('https://'+localStorage.env+'.roasup.com/api/videoResizer/startRender', startRender)
 						.then(function(data) {
 							console.log(data)
+							consoleLog('send render request');
 							if(data.success) {
 						        $('.resizer-social-option.stepB label:not(.color)').classList.toggle('checked');
 								btnsDisable('.resizer-social-option input','disable');
@@ -288,21 +309,29 @@ document.addEventListener("DOMContentLoaded", function() {
 				case 'download':
 					break;
 				case 'new':
-					addOrRemoveClassToAll('.resizer-social-option.stepA', '', 'hide');
-					addOrRemoveClassToAll('.resizer-social-option.stepA label', '', 'checked');
-					addOrRemoveClassToAll('.resizer-social-option.stepC', 'hide');
-				    $('#dropzone').style.display = '';
-				    $('.video-uploaded').style.display = '';
-				    // addOrRemoveClassToAll('.resizer-social-option radio-label').classList.remove('color');
-					
-					dropzoneItem.removeAllFiles();
-					btnsDisable('.resizer-social-option input','disable');
+					$('#progress').click();
 					break;
 				default:
 			}
 	    });
 	});
 
+	$('#progress').addEventListener('click', function(event) {
+		progressBar.animate(0);
+		addOrRemoveClassToAll('.resizer-social-option.stepA', '', 'hide');
+		addOrRemoveClassToAll('.resizer-social-option.stepA.show', '', 'show');
+		addOrRemoveClassToAll('.resizer-social-option.stepA label', '', 'checked');
+		addOrRemoveClassToAll('.resizer-social-option.stepB', 'hide');
+		addOrRemoveClassToAll('.resizer-social-option.stepC', 'hide');
+	    $('#dropzone').style.display = '';
+	    $('.video-uploaded').style.display = '';
+		if(checkStatusId) 
+			clearInterval(checkStatusId);
+		dropzoneItem.removeAllFiles();
+		dropzoneItem.removeAllFiles(true);
+		btnsDisable('.resizer-social-option input','disable');
+		this.disabled = true;
+	});
 	/**
 	 * Функция подгона превьюхи под размеры устройства
 	 * @param  {[type]} fitSizeClass [description]
@@ -341,6 +370,7 @@ document.addEventListener("DOMContentLoaded", function() {
 			postData('https://'+localStorage.env+'.roasup.com/api/videoResizer/checkStatus', checkStatus)
 				.then(function(data) {
 					console.log(data.task)
+					consoleLog('status: ' + data.task);
 					if(data.task == 'Finish') {
 						clearInterval(checkStatusId);
 						checkStatus.yandex = data.yandex;
@@ -387,27 +417,26 @@ document.addEventListener("DOMContentLoaded", function() {
 	  renameFile: function(file) {
 	  	return Date.now() + '_' + file.name;
 	  },
-	  // params: { 'serviceToken' : localStorage.serviceToken },
+	  uploadprogress: function(file, progress, bytesSent) {
+		progressBar.animate(progress/100);
+		console.log([file, progress, bytesSent]);
+	  },
+	  params: { 'serviceToken' : localStorage.serviceToken },
 	  init: function () {
 		this.on("error", function(file) {
 		    console.error("smth error w " + file.name);
 		});
-		/*
+		
 		this.on("drop", function(file) {
-		    // alert("drop");
-			var progressBar =
-			    new ProgressBar.Circle('#progress', {
-			        color: '#e91e63',
-			        strokeWidth: 50,
-			        duration: 2000, // milliseconds
-			        easing: 'easeInOut'
-			    });
-
-			progressBar.animate(0.8);
+		    console.log("drop " + file.name);
 		});
-		*/
+		this.on("canceled", function(file) {
+		    console.log("canceled " + file.name);
+		});
+		
 		this.on("sending", function(file, xhr, formData) {
-			formData.append("serviceToken", localStorage.serviceToken);
+			$('#progress').disabled = false;
+			// formData.append("serviceToken", localStorage.serviceToken);
 		});
 		this.on("success", function(file, response) {
 

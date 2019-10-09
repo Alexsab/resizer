@@ -89,3 +89,7 @@ if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_dir.$_FILES['file'][
     header('Content-type: application/json');
     echo json_encode(array("success" => true, "R" => "H", "renderId" => 1, 'file' => $target_file));
 }
+
+// echo var_dump($_REQUEST)."\n";
+// $_POST = json_decode(file_get_contents("php://input"),true);
+// echo var_dump($_POST);

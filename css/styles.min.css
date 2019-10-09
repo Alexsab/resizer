@@ -701,6 +701,7 @@ body {
 }
 
 .grid {
+  position: relative;
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: 1fr 1fr;
@@ -997,11 +998,13 @@ input[type="radio"] {
   display: flex;
 }
 
-.box {
-  display: inline-block;
+.box,
+.progress {
   position: absolute;
-  width: 50%;
-  height: 100%;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 .progress {
@@ -1021,20 +1024,65 @@ input[type="radio"] {
           justify-content: center;
   overflow: auto;
   margin: auto;
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
   font-size: 2rem;
 }
 
-.progress > .inner {
+.progress > .inner,
+.progress > .inner:before,
+.progress > .inner:after {
   position: absolute;
+  width: 40px;
+  height: 4px;
+  border-radius: 4px;
+}
+
+.progress > .inner {
   color: white;
+  -webkit-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+          transform: rotate(45deg);
+}
+
+.progress > .inner:before, .progress > .inner:after {
+  display: block;
+  content: "";
+  background-color: #fff;
+}
+
+.progress > .inner:after {
+  bottom: 0;
+  -webkit-transform: rotate(-90deg);
+      -ms-transform: rotate(-90deg);
+          transform: rotate(-90deg);
 }
 
 .progress > svg {
   height: 100%;
   display: block;
+}
+
+.console {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 15vh;
+  font-size: 2em;
+  color: #e91e63;
+  padding: 10px;
+  overflow-y: scroll;
+}
+
+.console:before {
+  display: block;
+  content: "";
+  background-image: -webkit-gradient(linear, right top, left top, color-stop(73%, #e91e63), color-stop(0%, #e91e6300));
+  background-image: -o-linear-gradient(right, #e91e63 73%, #e91e6300 0%);
+  background-image: linear-gradient(to left, #e91e63 73%, #e91e6300 0%);
+  background-position: bottom;
+  background-size: 50px 8px;
+  background-repeat: repeat-x;
+  width: 150px;
+  height: 8px;
+  position: fixed;
+  bottom: 16vh;
 }
