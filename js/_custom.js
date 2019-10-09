@@ -467,6 +467,7 @@ document.addEventListener("DOMContentLoaded", function() {
 		this.on("error", function(file) {
 		    console.error("smth error w " + file.name);
 		    consoleLog("smth error with «" + file.name + "»");
+		    this.removeAllFiles();
 		});
 		
 		this.on("drop", function(file) {
