@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
-
+		
 	/* work with settings start */
 
 	if(window.location.search.substring(1)=='clear') {
@@ -113,6 +113,12 @@ document.addEventListener("DOMContentLoaded", function() {
         duration: 100, // milliseconds
         easing: 'easeOut'
     }),
+    renderStatus = {
+    	total: 70,
+    	step1: 0,
+    	step2: 0,
+    	step3: 0
+    },
     $ = function(name) { return document.querySelector(name) },
 	$$ = function(name) { return document.querySelectorAll(name) };
 
@@ -177,7 +183,7 @@ document.addEventListener("DOMContentLoaded", function() {
 		var consoleDiv = document.querySelector(".console");
 		var date = new Date();
 		if(consoleDiv.innerText == "") consoleDiv.classList.remove('hide');
-		consoleDiv.innerText += date.getMinutes() + ":" + date.getSeconds() + ": " + msg + "\n";
+		consoleDiv.innerText += ("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2) + ":" + ("0" + date.getSeconds()).slice(-2) + " – " + msg + "\n";
 		consoleDiv.scrollTop = consoleDiv.scrollHeight;
 	}
 
@@ -240,10 +246,11 @@ document.addEventListener("DOMContentLoaded", function() {
 			if(this.value === 'render') {
 				if(localStorage.env == env) {
 					this.disabled = true;
+					$('.progress').classList.add('flipH');
 					postData('https://'+localStorage.env+'.roasup.com/api/videoResizer/startRender', startRender)
 						.then(function(data) {
 							console.log(data)
-							consoleLog('send render request');
+							consoleLog('start render ' + startRender.renderId + ", uid : " + data.uid);
 							if(data.success) {
 						        $('.resizer-social-option.stepB label:not(.color)').classList.toggle('checked');
 								btnsDisable('.resizer-social-option input','disable');
@@ -304,19 +311,32 @@ document.addEventListener("DOMContentLoaded", function() {
 					break;
 				case 'share':
 					copyToClipboard(checkStatus.yandex);
-					window.prompt("Copy to clipboard: Ctrl+C, Enter", checkStatus.yandex);
+					window.prompt("Copy to clipboard: Ctrl+C (CMD+C), Enter", checkStatus.yandex);
 					break;
 				case 'download':
 					break;
 				case 'new':
-					$('#progress').click();
+					element.disabled = true;
+					startFromBegin();
 					break;
 				default:
 			}
 	    });
 	});
 
+	$('#progress').disabled = true;
 	$('#progress').addEventListener('click', function(event) {
+		if(this.disabled) return;
+		this.disabled = true;
+		startFromBegin();
+	});
+
+	/**
+	 * функция Начать с начала
+	 * @return {[type]} [description]
+	 */
+	function startFromBegin() {
+		console.log('clear all');
 		progressBar.animate(0);
 		addOrRemoveClassToAll('.resizer-social-option.stepA', '', 'hide');
 		addOrRemoveClassToAll('.resizer-social-option.stepA.show', '', 'show');
@@ -332,8 +352,8 @@ document.addEventListener("DOMContentLoaded", function() {
 		$(".console").innerText = '';
 		$(".console").classList.add('hide');
 		btnsDisable('.resizer-social-option input','disable');
-		this.disabled = true;
-	});
+	}
+
 	/**
 	 * Функция подгона превьюхи под размеры устройства
 	 * @param  {[type]} fitSizeClass [description]
@@ -371,15 +391,34 @@ document.addEventListener("DOMContentLoaded", function() {
 		if(localStorage.env == env) {
 			postData('https://'+localStorage.env+'.roasup.com/api/videoResizer/checkStatus', checkStatus)
 				.then(function(data) {
-					console.log(data.task)
+					console.log(data.task);
 					consoleLog('status: ' + data.task);
-					if(data.task == 'Finish') {
-						clearInterval(checkStatusId);
-						checkStatus.yandex = data.yandex;
-						addOrRemoveClassToAll('.resizer-social-option.stepA.show', '', 'show');
-						addOrRemoveClassToAll('.resizer-social-option.stepB', 'hide');
-						addOrRemoveClassToAll('.resizer-social-option.stepC', '', 'hide');
-						btnsDisable('.resizer-social-option input:disabled','enable');
+					switch(data.task.toLowerCase()) {
+						case 'preparation':
+							renderStatus.step1++;
+							// ((t-c)+2t)/3t = (3t-c)/3t = 1 - c/3t
+							progressBar.animate(1-renderStatus.step1/3/renderStatus.total);
+							break;
+						case 'start':
+							renderStatus.step2++;
+							// (2t-c)/3t = 2/3 - c/3t
+							progressBar.animate(2/3-renderStatus.step2/3/renderStatus.total);
+							break;
+						case 'uploading':
+							renderStatus.step3++;
+							// (t-c)/3t = 1/3 - c/3t
+							progressBar.animate(1/3-renderStatus.step3/3/renderStatus.total);
+							break;
+						case 'finish':
+							clearInterval(checkStatusId);
+							checkStatus.yandex = data.yandex;
+							addOrRemoveClassToAll('.resizer-social-option.stepA.show', '', 'show');
+							addOrRemoveClassToAll('.resizer-social-option.stepB', 'hide');
+							addOrRemoveClassToAll('.resizer-social-option.stepC', '', 'hide');
+							btnsDisable('.resizer-social-option input:disabled','enable');
+							progressBar.animate(0);
+							$('#progress').disabled = true;
+							break;
 					}
 				}) // JSON-строка полученная после вызова `response.json()`
 				.catch(error => console.error(error));
@@ -421,7 +460,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	  },
 	  uploadprogress: function(file, progress, bytesSent) {
 		progressBar.animate(progress/100);
-		console.log([file, progress, bytesSent]);
+		// console.log([file, progress, bytesSent]);
 	  },
 	  params: { 'serviceToken' : localStorage.serviceToken },
 	  init: function () {
@@ -431,6 +470,7 @@ document.addEventListener("DOMContentLoaded", function() {
 		
 		this.on("drop", function(file) {
 		    console.log("drop " + file.name);
+		    $('.progress').classList.remove('flipH');
 		});
 		this.on("canceled", function(file) {
 		    console.log("canceled " + file.name);
