@@ -179,11 +179,11 @@ document.addEventListener("DOMContentLoaded", function() {
 		});
 	}
 
-	function consoleLog(msg) {
+	function consoleLog(msg, EOL = "\n", time = false) {
 		var consoleDiv = document.querySelector(".console");
 		var date = new Date();
 		if(consoleDiv.innerText == "") consoleDiv.classList.remove('hide');
-		consoleDiv.innerText += ("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2) + ":" + ("0" + date.getSeconds()).slice(-2) + " – " + msg + "\n";
+		consoleDiv.innerText += (time ? ( ("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2) + ":" + ("0" + date.getSeconds()).slice(-2) + " – ") : "") + msg + EOL;
 		consoleDiv.scrollTop = consoleDiv.scrollHeight;
 	}
 
@@ -250,7 +250,8 @@ document.addEventListener("DOMContentLoaded", function() {
 					postData('https://'+localStorage.env+'.roasup.com/api/videoResizer/startRender', startRender)
 						.then(function(data) {
 							console.log(data)
-							consoleLog('start render ' + startRender.renderId + ", uid : " + data.uid);
+							// consoleLog('start render ' + startRender.renderId + ", uid : " + data.uid);
+							consoleLog('PROGRESS:');
 							if(data.success) {
 						        $('.resizer-social-option.stepB label:not(.color)').classList.toggle('checked');
 								btnsDisable('.resizer-social-option input','disable');
@@ -338,9 +339,9 @@ document.addEventListener("DOMContentLoaded", function() {
 	function startFromBegin() {
 		console.log('clear all');
 		progressBar.animate(0);
+		addOrRemoveClassToAll('.resizer-social-option. label.checked', '', 'checked');
 		addOrRemoveClassToAll('.resizer-social-option.stepA', '', 'hide');
 		addOrRemoveClassToAll('.resizer-social-option.stepA.show', '', 'show');
-		addOrRemoveClassToAll('.resizer-social-option.stepA label', '', 'checked');
 		addOrRemoveClassToAll('.resizer-social-option.stepB', 'hide');
 		addOrRemoveClassToAll('.resizer-social-option.stepC', 'hide');
 	    $('#dropzone').style.display = '';
@@ -392,24 +393,32 @@ document.addEventListener("DOMContentLoaded", function() {
 			postData('https://'+localStorage.env+'.roasup.com/api/videoResizer/checkStatus', checkStatus)
 				.then(function(data) {
 					console.log(data.task);
-					consoleLog('status: ' + data.task);
+					// consoleLog('status: ' + data.task);
 					switch(data.task.toLowerCase()) {
+						case 'error':
+							consoleLog('Ошибка рендера');
+							clearInterval(checkStatusId);
+							break;
 						case 'preparation':
+							if(renderStatus.step1==0) consoleLog('Подготовка',' ');
 							renderStatus.step1++;
 							// ((t-c)+2t)/3t = (3t-c)/3t = 1 - c/3t
 							progressBar.animate(1-renderStatus.step1/3/renderStatus.total);
 							break;
 						case 'start':
+							if(renderStatus.step2==0) consoleLog(' Старт',' ');
 							renderStatus.step2++;
 							// (2t-c)/3t = 2/3 - c/3t
 							progressBar.animate(2/3-renderStatus.step2/3/renderStatus.total);
 							break;
 						case 'uploading':
+							if(renderStatus.step3==0) consoleLog(' Выгрузка',' ');
 							renderStatus.step3++;
 							// (t-c)/3t = 1/3 - c/3t
 							progressBar.animate(1/3-renderStatus.step3/3/renderStatus.total);
 							break;
 						case 'finish':
+							consoleLog(' Конец');
 							clearInterval(checkStatusId);
 							checkStatus.yandex = data.yandex;
 							addOrRemoveClassToAll('.resizer-social-option.stepA.show', '', 'show');
@@ -456,7 +465,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	  acceptedFiles: '.mp4',
 
 	  renameFile: function(file) {
-	  	return Date.now() + '_' + file.name;
+	  	return Date.now() + '_' + '.mp4';//file.name;
 	  },
 	  uploadprogress: function(file, progress, bytesSent) {
 		progressBar.animate(progress/100);
@@ -466,7 +475,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	  init: function () {
 		this.on("error", function(file) {
 		    console.error("smth error w " + file.name);
-		    consoleLog("smth error with «" + file.name + "»");
+		    consoleLog("ОШИБКА : «" + file.name + "»");
 		    this.removeAllFiles();
 		});
 		
