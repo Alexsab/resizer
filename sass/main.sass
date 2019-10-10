@@ -187,16 +187,20 @@ body
 		text-align: center
 		position: relative
 		color: white
-		font-size: 3vw
+		font-size: 3.5vw
 		margin: 0
 		line-height: 0
+		background-color: $gray
+
 		+media-breakpoint-up(lg)
 			max-width: 12vw
 			max-height: 12vw
 		+media-breakpoint-down(md)
 			max-width: 140px
 			max-height: 140px
-		background-color: $gray
+		+media-breakpoint-down(sm)
+			font-size: 5vh
+
 		&.download
 			background: center center no-repeat / 60% url(../img/download.svg) $gray
 		&.share
@@ -212,6 +216,8 @@ body
 			background-color: $gray
 	&.stepA label
 		font-size: 9vw
+		+media-breakpoint-down(sm)
+			font-size: 15vh
 	&.right
 		justify-self: end
 	&.bottom
