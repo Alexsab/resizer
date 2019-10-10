@@ -339,7 +339,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	function startFromBegin() {
 		console.log('clear all');
 		progressBar.animate(0);
-		addOrRemoveClassToAll('.resizer-social-option. label.checked', '', 'checked');
+		addOrRemoveClassToAll('.resizer-social-option label.checked', '', 'checked');
 		addOrRemoveClassToAll('.resizer-social-option.stepA', '', 'hide');
 		addOrRemoveClassToAll('.resizer-social-option.stepA.show', '', 'show');
 		addOrRemoveClassToAll('.resizer-social-option.stepB', 'hide');
