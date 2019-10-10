@@ -246,7 +246,7 @@ document.addEventListener("DOMContentLoaded", function() {
 			if(this.value === 'render') {
 				if(localStorage.env == env) {
 					this.disabled = true;
-					$('.progress').classList.add('flipH');
+					$('#progress').classList.add('flipH');
 					postData('https://'+localStorage.env+'.roasup.com/api/videoResizer/startRender', startRender)
 						.then(function(data) {
 							console.log(data)
@@ -481,13 +481,13 @@ document.addEventListener("DOMContentLoaded", function() {
 		
 		this.on("drop", function(file) {
 		    console.log("drop " + file.name);
-		    $('.progress').classList.remove('flipH');
 		});
 		this.on("canceled", function(file) {
 		    console.log("canceled " + file.name);
 		});
 		
 		this.on("sending", function(file, xhr, formData) {
+			$('#progress').classList.remove('flipH');
 			$('#progress').disabled = false;
 			// formData.append("serviceToken", localStorage.serviceToken);
 		});
