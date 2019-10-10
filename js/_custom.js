@@ -105,7 +105,8 @@ document.addEventListener("DOMContentLoaded", function() {
     checkStatus = {
     	serviceToken : localStorage.serviceToken,
     	uid : '',
-    	yandex : ''
+    	yandex : '',
+    	fileName: ''
     },
     progressBar = new ProgressBar.Circle('#progress', {
         color: '#e91e63',
@@ -147,6 +148,7 @@ document.addEventListener("DOMContentLoaded", function() {
 			if(element.checked === false) {
 		        // element.parentNode.classList.remove('checked');
 		        if(element.value != filesUploadResult.size) {
+			        element.parentNode.classList.remove('checked');
 			        element.parentNode.classList.add('color');
 		        }
 		    };
@@ -196,15 +198,17 @@ document.addEventListener("DOMContentLoaded", function() {
 			// toggleColorClass('.resizer-social-option.stepA input');
 
 	        $('.video-uploaded .resizer-fit-preview').classList.remove('resizer-fit-S','resizer-fit-V','resizer-fit-H','resizer-fit-F');
-	        $('.video-uploaded .resizer-fit-preview').classList.add('resizer-fit-'+this.value);
-	        resizeFitPreview('resizer-fit-'+this.value);
 	        
 	        startRender.sizeReq = this.value;
 
 	        if(!this.parentNode.parentNode.classList.contains('hide')) {
+		        $('.video-uploaded .resizer-fit-preview').classList.add('resizer-fit-'+this.value);
+		        resizeFitPreview('resizer-fit-'+this.value);
 		        addOrRemoveClassToAll('.resizer-social-option.stepA', 'hide');
 		        addOrRemoveClassToAll('.resizer-social-option.stepB', '', 'hide');
 	        } else {
+		        $('.video-uploaded .resizer-fit-preview').classList.add('resizer-fit-'+filesUploadResult.size);
+		        resizeFitPreview('resizer-fit-'+filesUploadResult.size);
 		        addOrRemoveClassToAll('.resizer-social-option.stepA', '', 'hide');
 		        addOrRemoveClassToAll('.resizer-social-option.stepB', 'hide');
 	        }
@@ -231,6 +235,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	        	default:
 	        }
 	        this.parentNode.classList.toggle('checked');
+	        this.parentNode.classList.toggle('colortext');
 	        this.parentNode.classList.toggle('color');
 	        this.parentNode.parentNode.classList.toggle('show');
 
@@ -253,13 +258,20 @@ document.addEventListener("DOMContentLoaded", function() {
 							// consoleLog('start render ' + startRender.renderId + ", uid : " + data.uid);
 							consoleLog('PROGRESS:');
 							if(data.success) {
-						        $('.resizer-social-option.stepB label:not(.color)').classList.toggle('checked');
+						        // $('.resizer-social-option.stepB label:not(.color)').classList.toggle('checked');
+						        $('.resizer-social-option.stepA.show label').classList.remove('colortext');
 								btnsDisable('.resizer-social-option input','disable');
 								checkStatusId = setInterval(checkStatusVideo, 1000);
 								checkStatus.uid = data.uid;
 							}
 						}) // JSON-строка полученная после вызова `response.json()`
 						.catch(error => console.error(error));
+				} else {
+					addOrRemoveClassToAll('.resizer-social-option.stepA.show', '', 'show');
+					addOrRemoveClassToAll('.resizer-social-option.stepB', 'hide');
+					addOrRemoveClassToAll('.resizer-social-option.stepC', '', 'hide');
+					progressBar.animate(0);
+					$('#progress').classList.add('disable');					
 				}
 			} else {
 				startRender.effectReq = this.value;
@@ -294,6 +306,7 @@ document.addEventListener("DOMContentLoaded", function() {
 				toggleColorClass('.resizer-social-option.stepB input');
 				// this.parentNode.classList.toggle('color');
 				this.parentNode.classList.remove('color');
+				this.parentNode.classList.add('checked');
 			}
 
 	    });
@@ -315,6 +328,7 @@ document.addEventListener("DOMContentLoaded", function() {
 					window.prompt("Copy to clipboard: Ctrl+C (CMD+C), Enter", checkStatus.yandex);
 					break;
 				case 'download':
+					window.open(checkStatus.yandex + "/" + checkStatus.fileName);
 					break;
 				case 'new':
 					element.disabled = true;
@@ -325,9 +339,9 @@ document.addEventListener("DOMContentLoaded", function() {
 	    });
 	});
 
-	$('#progress').disabled = true;
+	$('#progress').classList.add('disable');
 	$('#progress').addEventListener('click', function(event) {
-		if(this.disabled) return;
+		if(this.classList.contains('disable')) return;
 		this.disabled = true;
 		startFromBegin();
 	});
@@ -340,10 +354,12 @@ document.addEventListener("DOMContentLoaded", function() {
 		console.log('clear all');
 		progressBar.animate(0);
 		addOrRemoveClassToAll('.resizer-social-option label.checked', '', 'checked');
+		addOrRemoveClassToAll('.resizer-social-option label.colortext', '', 'colortext');
 		addOrRemoveClassToAll('.resizer-social-option.stepA', '', 'hide');
 		addOrRemoveClassToAll('.resizer-social-option.stepA.show', '', 'show');
 		addOrRemoveClassToAll('.resizer-social-option.stepB', 'hide');
 		addOrRemoveClassToAll('.resizer-social-option.stepC', 'hide');
+		$('.resizer-social-options-container').classList.remove('first'+filesUploadResult.size);
 	    $('#dropzone').style.display = '';
 	    $('.video-uploaded').style.display = '';
 		if(checkStatusId) 
@@ -421,12 +437,13 @@ document.addEventListener("DOMContentLoaded", function() {
 							consoleLog(' Конец');
 							clearInterval(checkStatusId);
 							checkStatus.yandex = data.yandex;
+							checkStatus.fileName = data.fileName;
 							addOrRemoveClassToAll('.resizer-social-option.stepA.show', '', 'show');
 							addOrRemoveClassToAll('.resizer-social-option.stepB', 'hide');
 							addOrRemoveClassToAll('.resizer-social-option.stepC', '', 'hide');
 							btnsDisable('.resizer-social-option input:disabled','enable');
 							progressBar.animate(0);
-							$('#progress').disabled = true;
+							$('#progress').classList.add('disable');
 							break;
 					}
 				}) // JSON-строка полученная после вызова `response.json()`
@@ -488,7 +505,7 @@ document.addEventListener("DOMContentLoaded", function() {
 		
 		this.on("sending", function(file, xhr, formData) {
 			$('#progress').classList.remove('flipH');
-			$('#progress').disabled = false;
+			$('#progress').classList.remove('disable');
 			// formData.append("serviceToken", localStorage.serviceToken);
 		});
 		this.on("success", function(file, response) {
@@ -512,6 +529,7 @@ document.addEventListener("DOMContentLoaded", function() {
 				$('.video-uploaded .resizer-fit-preview').innerHTML = divVideo;
 				$('.video-uploaded .resizer-fit-preview').innerHTML += divVideo;
 				$('.video-uploaded .resizer-fit-preview').classList.add('resizer-fit-'+filesUploadResult.size);
+				$('.resizer-social-options-container').classList.add('first'+filesUploadResult.size);
 				$$('.video-uploaded .resizer-fit-video')[0].classList.add('first');
 				$$('.video-uploaded .resizer-fit-video')[1].classList.add('second', 'hide');
 			    resizeFitPreview('resizer-fit-'+filesUploadResult.size);

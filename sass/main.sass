@@ -179,7 +179,64 @@ body
 	justify-content: center
 
 
+.resizer-social-options-container
+	&.firstH,
+	&.firstS,
+	&.firstV,
+	&.firstF
+		.stepA label
+			color: white
+	&.firstH
+		.stepA:nth-child(2) // H
+			order: 1
+			font-weight: 700
+		.stepA:nth-child(3) // S
+			order: 2
+		.stepA:nth-child(4) // V
+			order: 3
+		.stepA:nth-child(5) // F
+			order: 4
+	&.firstS
+		.stepA:nth-child(2)
+			order: 3
+		.stepA:nth-child(3)
+			order: 1
+			font-weight: 700
+		.stepA:nth-child(4)
+			order: 4
+		.stepA:nth-child(5)
+			order: 2
+	&.firstV
+		.stepA:nth-child(2)
+			order: 2
+		.stepA:nth-child(3)
+			order: 4
+		.stepA:nth-child(4)
+			order: 1
+			font-weight: 700
+		.stepA:nth-child(5)
+			order: 3
+	&.firstF
+		.stepA:nth-child(2)
+			order: 4
+		.stepA:nth-child(3)
+			order: 3
+		.stepA:nth-child(4)
+			order: 2
+		.stepA:nth-child(5)
+			order: 1
+			font-weight: 700
+
 .resizer-social-option 
+	order: 4
+	&.stepA label
+		color: $ruby00
+		font-size: 9vw
+		+media-breakpoint-down(sm)
+			font-size: 15vh
+	&.stepC
+		.color:hover
+			background-color: $gray
 	label
 		width: 100%
 		height: 100%
@@ -206,22 +263,15 @@ body
 		&.share
 			background: center 40% no-repeat/50% url(../img/share.svg) $gray
 		&.yadisk
-			background: center center no-repeat/80% url(../img/yadisk.svg) $gray
+			background: center center no-repeat/80% url(../img/yandex-disk.svg) $gray
 		&.color
 			background-color: $ruby
+			cursor: pointer
+		&.colortext
+			color: $ruby !important
+			cursor: pointer
 		&.checked
-			color: $ruby
-	&.stepC
-		.color:hover
-			background-color: $gray
-	&.stepA label
-		font-size: 9vw
-		+media-breakpoint-down(sm)
-			font-size: 15vh
-	&.right
-		justify-self: end
-	&.bottom
-		align-self: end
+			font-weight: 700
 
 input[type="radio"]
   display: none
@@ -256,6 +306,8 @@ input[type="radio"]
 	overflow: auto
 	margin: auto
 	font-size: 2rem
+	&:not(.disable)
+		cursor: pointer
 	&.flipH
 		transform: scaleX(-1)
 	> .inner,
