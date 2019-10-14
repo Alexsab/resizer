@@ -116,7 +116,7 @@ document.addEventListener("DOMContentLoaded", function() {
         easing: 'easeOut'
     }),
     renderStatus = {
-    	total: 70,
+    	total: 60,
     	step1: 0,
     	step2: 0,
     	step3: 0
@@ -424,21 +424,18 @@ document.addEventListener("DOMContentLoaded", function() {
 							break;
 						case 'preparation':
 							if(renderStatus.step1==0) consoleLog('Подготовка',' ');
-							renderStatus.step1++;
-							// ((t-c)+2t)/3t = (3t-c)/3t = 1 - c/3t
-							progressBar.animate(1-renderStatus.step1/3/renderStatus.total);
+							renderStatus.step1 = renderStatus.step1 + (1 - renderStatus.step1) / renderStatus.total;
+							progressBar.animate(1 - 1/3*renderStatus.step1);
 							break;
 						case 'start':
 							if(renderStatus.step2==0) consoleLog(' Старт',' ');
-							renderStatus.step2++;
-							// (2t-c)/3t = 2/3 - c/3t
-							progressBar.animate(2/3-renderStatus.step2/3/renderStatus.total);
+							renderStatus.step2 = renderStatus.step2 + (1 - renderStatus.step2) / renderStatus.total;
+							progressBar.animate(2/3 - 1/3*renderStatus.step2);
 							break;
 						case 'uploading':
 							if(renderStatus.step3==0) consoleLog(' Выгрузка',' ');
-							renderStatus.step3++;
-							// (t-c)/3t = 1/3 - c/3t
-							progressBar.animate(1/3-renderStatus.step3/3/renderStatus.total);
+							renderStatus.step3 = renderStatus.step3 + (1 - renderStatus.step3) / renderStatus.total;
+							progressBar.animate(1/3 - 1/3*renderStatus.step3);
 							break;
 						case 'finish':
 							consoleLog(' Конец');
