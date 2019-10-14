@@ -191,7 +191,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	}
 
 	window.onresize = function(event) {
-	    resizeFitPreview('resizer-fit-'+currentSize);
+	    // resizeFitPreview('resizer-fit-'+currentSize);
 	};
 
 	/**
@@ -217,7 +217,7 @@ document.addEventListener("DOMContentLoaded", function() {
 		        addOrRemoveClassToAll('.resizer-social-option.stepA', '', 'hide');
 		        addOrRemoveClassToAll('.resizer-social-option.stepB', 'hide');
 	        }
-	        resizeFitPreview('resizer-fit-'+currentSize);
+	        // resizeFitPreview('resizer-fit-'+currentSize);
 
 	        switch(filesUploadResult.size+"_"+this.value) {
 	        	case "H_S":
@@ -539,7 +539,7 @@ document.addEventListener("DOMContentLoaded", function() {
 				$('.resizer-social-options-container').classList.add('first'+filesUploadResult.size);
 				$$('.video-uploaded .resizer-fit-video')[0].classList.add('first');
 				$$('.video-uploaded .resizer-fit-video')[1].classList.add('second', 'hide');
-			    resizeFitPreview('resizer-fit-'+filesUploadResult.size);
+			    // resizeFitPreview('resizer-fit-'+filesUploadResult.size);
 			    
 			    btnsDisable('.resizer-social-option input:disabled','enable');
 		    } else {

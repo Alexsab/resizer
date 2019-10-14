@@ -824,6 +824,22 @@ body {
   background-color: #000000;
 }
 
+.resizer-fit-V {
+  padding-bottom: 177.77%;
+}
+
+.resizer-fit-H {
+  padding-bottom: 56.25%;
+}
+
+.resizer-fit-S {
+  padding-bottom: 100%;
+}
+
+.resizer-fit-F {
+  padding-bottom: 125%;
+}
+
 .resizer-fit-video {
   width: 100%;
   height: 100%;
