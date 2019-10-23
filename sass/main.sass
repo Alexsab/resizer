@@ -53,7 +53,7 @@ body
 			// grid-gap: 20px
 		+media-breakpoint-down(sm)
 			// grid-gap: 5px
-			padding: 5vh 5vw
+			// padding: 5vh 5vw
 
 .img
 	width: 100%
@@ -94,10 +94,12 @@ body
 	width: calc(90vh*446/893)
 	height: 100%
 	position: relative
+	+media-breakpoint-down(md)
+		width: calc(100vh/1.5*446/893)
 	+media-breakpoint-down(sm)
 		width: calc(90vh*446/893)
 	+media-breakpoint-down(xs)
-		width: calc(100vw*446/893)
+		width: calc(120vw*446/893)
 
 .device-frame
 	width: 100%
@@ -189,6 +191,16 @@ body
 	display: flex
 	align-items: center
 	justify-content: center
+.resizer-social-option 
+	list-style: none
+	position: relative
+	label.disable
+		position: absolute
+		transform: translate(-50%,-50%)
+		top: 50%
+		left: 50%
+	label
+
 
 
 .resizer-social-options-container
@@ -199,6 +211,8 @@ body
 	&.firstF
 		.stepA label
 			color: white
+			text
+				fill: white
 	&.firstH
 		.stepA:nth-child(2) // H
 			order: 1
@@ -242,33 +256,63 @@ body
 
 .resizer-social-option 
 	order: 4
-	&.stepA label
-		color: $ruby00
-		font-size: 9vw
-		+media-breakpoint-down(sm)
-			font-size: 15vh
 	.color:hover
 		background-color: $french-rose
 	label
-		width: 100%
-		height: 100%
+		width: calc(100vw/8)
+		height: calc(100vw/8)
+		font-size: 3.5vw
+		width: calc(100vmin/2)
+		height: calc(100vmin/2)
+		font-size: 2.5vmax
 		border-radius: 50%
 		text-align: center
 		position: relative
 		color: white
-		font-size: 3.5vw
 		margin: 0
 		line-height: 0
 		background-color: $gray
-
 		+media-breakpoint-up(lg)
 			max-width: 12vw
 			max-height: 12vw
 		+media-breakpoint-down(md)
+			width: calc(100vw/4)
+			height: calc(100vw/4)
 			max-width: 140px
 			max-height: 140px
 		+media-breakpoint-down(sm)
-			font-size: 5vh
+			width: calc(100vw/3)
+			height: calc(100vw/3)
+			font-size: 1.7rem
+		svg
+			width: 100%
+			height: auto
+		text
+			fill: white
+		input[value="H"]+svg text
+			transform: translate(15%, 85%)
+			font-size: 100px
+		input[value="S"]+svg text
+			transform: translate(19%, 85%)
+			font-size: 100px
+		input[value="V"]+svg text
+			transform: translate(18%, 90%)
+			font-size: 100px
+		input[value="F"]+svg text
+			transform: translate(20%, 85%)
+			font-size: 100px
+		input[value="render"]+svg text
+			transform: translate(3%, 62%)
+			font-size: 30px
+		input[value="crop"]+svg text
+			transform: translate(3%,63%)
+			font-size: 36px
+		input[value="blur"]+svg text
+			transform: translate(5%,63%)
+			font-size: 36px
+		input[value="new"]+svg text
+			transform: translate(5%,65%)
+			font-size: 41px
 
 		&.download
 			background: center center no-repeat / 60% url(../img/download.svg) $gray
@@ -281,11 +325,30 @@ body
 			cursor: pointer
 		&.colortext
 			color: $ruby !important
+			text
+				fill: $ruby !important
 			cursor: pointer
 			&:hover
 				color: $french-rose !important
+				text
+					fill: $french-rose !important
 		&.checked
 			font-weight: 700
+	&.stepA label
+		color: $ruby00
+		text
+			fill: $ruby00
+		font-size: 9vw
+		// font-size: 9vh
+		+media-breakpoint-down(sm)
+			font-size: 15vmin
+
+.horizont
+	.resizer-social-option
+		&.stepA label
+			font-size: 9vw
+		label
+			font-size: 14vh
 
 input[type="radio"]
   display: none
@@ -320,6 +383,7 @@ input[type="radio"]
 	overflow: auto
 	margin: auto
 	font-size: 2rem
+	z-index: 1000
 	&:not(.disable)
 		cursor: pointer
 	&.flipH

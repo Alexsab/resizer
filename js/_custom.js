@@ -588,6 +588,7 @@ document.addEventListener("DOMContentLoaded", function() {
 		            self.emit("success", file, videos[sessionStorage.numVideo], null);
 		            self.emit("complete", file);
 		            self.processQueue();
+		            $('#progress').classList.remove('disable');
 		            //document.getElementsByClassName("dz-success-mark").style.opacity = "1";
 		          }
 		        };
