@@ -135,6 +135,41 @@ body
 		height: 100%
 		position:absolute
 
+.workspace-controls
+	position: relative
+	&.hideconsole
+		.console
+			display: none
+		.resizer-social-options-container
+			height: 100%
+
+
+.console
+	position: absolute
+	bottom: 0
+	.msg
+		width: 100%
+		height: 15vh
+		font-size: 2em
+		color: $ruby
+		overflow-y: scroll
+		line-height: 1.2
+	padding: 10px
+	&:before
+		display: block
+		content: ""
+		// background-color: $ruby
+		background-image: linear-gradient(to left, $ruby 73%, $ruby00 0%)
+		background-position: bottom
+		background-size: 50px 8px
+		background-repeat: repeat-x
+		width: 150px
+		height: 8px
+		position: absolute
+		// bottom: 17vh
+		top: -1vh;
+
+
 .resizer-fit-preview
 	position: relative
 	width: 100%
@@ -263,6 +298,7 @@ body
 
 .resizer-social-options-container
 	padding: 0
+	transition: height .3s ease
 	// padding-bottom: 20vh
 	height: 80%
 	&.firstH,
@@ -474,25 +510,3 @@ input[type="radio"]
 		display: block
 	&:hover
 		filter: opacity(0.7)
-
-.console
-	position: absolute
-	bottom: 0
-	width: 100%
-	height: 15vh
-	font-size: 2em
-	color: $ruby
-	padding: 10px
-	overflow-y: scroll
-	&:before
-		display: block
-		content: ""
-		// background-color: $ruby
-		background-image: linear-gradient(to left, $ruby 73%, $ruby00 0%)
-		background-position: bottom
-		background-size: 50px 8px
-		background-repeat: repeat-x
-		width: 150px
-		height: 8px
-		position: fixed
-		bottom: 16vh

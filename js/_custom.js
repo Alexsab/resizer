@@ -91,38 +91,49 @@ document.addEventListener("DOMContentLoaded", function() {
     	{success: true, R: 'V', renderId: 1, file: 'uploads/916.mp4'}, 
     	{success: true, R: 'F', renderId: 1, file: 'uploads/4x5.mp4'}
     ],
-    currentSize = '',
-	filesUploadResult = {
-		src : '',
-		size : ''
-	},
-	startRender = {
-    	serviceToken : localStorage.serviceToken,
-		renderId : '',
-		sizeReq : '',
-		effectReq : ''
-    },
+    currentSize,
+	filesUploadResult,
+	startRender,
     checkStatusId,
-    checkStatus = {
-    	serviceToken : localStorage.serviceToken,
-    	uid : '',
-    	yandex : '',
-    	fileName: ''
-    },
+    checkStatus,
+    renderStatus,
     progressBar = new ProgressBar.Circle('#progress', {
         color: '#e91e63',
         strokeWidth: 50,
         duration: 100, // milliseconds
         easing: 'easeOut'
     }),
-    renderStatus = {
-    	total: 60,
-    	step1: 0,
-    	step2: 0,
-    	step3: 0
-    },
     $ = function(name) { return document.querySelector(name) },
 	$$ = function(name) { return document.querySelectorAll(name) };
+
+	function clearParam() {
+		currentSize = '';
+		filesUploadResult = {
+			src : '',
+			size : ''
+		};
+		startRender = {
+	    	serviceToken : localStorage.serviceToken,
+			renderId : '',
+			sizeReq : '',
+			effectReq : ''
+	    };
+	    checkStatusId,
+	    checkStatus = {
+	    	serviceToken : localStorage.serviceToken,
+	    	uid : '',
+	    	yandex : '',
+	    	fileName: ''
+	    };
+	    renderStatus = {
+	    	total: 60,
+	    	step1: 0,
+	    	step2: 0,
+	    	step3: 0
+	    };
+	}
+
+	clearParam();
 
 	/**
 	 * добавить или удалить класс у всех элементов
@@ -183,9 +194,9 @@ document.addEventListener("DOMContentLoaded", function() {
 	}
 
 	function consoleLog(msg, EOL = "\n", time = false) {
-		var consoleDiv = document.querySelector(".console");
+		var consoleDiv = document.querySelector(".console .msg");
 		var date = new Date();
-		if(consoleDiv.innerText == "") consoleDiv.classList.remove('hide');
+		if(consoleDiv.innerText == "") $('.workspace-controls').classList.remove('hideconsole');
 		consoleDiv.innerText += (time ? ( ("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2) + ":" + ("0" + date.getSeconds()).slice(-2) + " – ") : "") + msg + EOL;
 		consoleDiv.scrollTop = consoleDiv.scrollHeight;
 	}
@@ -359,6 +370,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	 */
 	function startFromBegin() {
 		console.log('clear all');
+		clearParam();
 		progressBar.animate(0);
 		addOrRemoveClassToAll('.resizer-social-option label.checked', '', 'checked');
 		addOrRemoveClassToAll('.resizer-social-option label.colortext', '', 'colortext');
@@ -367,14 +379,15 @@ document.addEventListener("DOMContentLoaded", function() {
 		addOrRemoveClassToAll('.resizer-social-option.stepB', 'hide');
 		addOrRemoveClassToAll('.resizer-social-option.stepC', 'hide');
 		$('.resizer-social-options-container').classList.remove('first'+filesUploadResult.size);
+		$('.video-uploaded .resizer-fit-preview').classList.remove('resizer-fit-S','resizer-fit-V','resizer-fit-H','resizer-fit-F');
 	    $('#dropzone').style.display = '';
 	    $('.video-uploaded').style.display = '';
 		if(checkStatusId) 
 			clearInterval(checkStatusId);
 		dropzoneItem.removeAllFiles();
 		dropzoneItem.removeAllFiles(true);
-		$(".console").innerText = '';
-		$(".console").classList.add('hide');
+		$(".console .msg").innerText = '';
+		$('.workspace-controls').classList.add('hideconsole');
 		btnsDisable('.resizer-social-option input','disable');
 	}
 
