@@ -370,7 +370,6 @@ document.addEventListener("DOMContentLoaded", function() {
 	 */
 	function startFromBegin() {
 		console.log('clear all');
-		clearParam();
 		progressBar.animate(0);
 		addOrRemoveClassToAll('.resizer-social-option label.checked', '', 'checked');
 		addOrRemoveClassToAll('.resizer-social-option label.colortext', '', 'colortext');
@@ -389,6 +388,7 @@ document.addEventListener("DOMContentLoaded", function() {
 		$(".console .msg").innerText = '';
 		$('.workspace-controls').classList.add('hideconsole');
 		btnsDisable('.resizer-social-option input','disable');
+		clearParam();
 	}
 
 	/**

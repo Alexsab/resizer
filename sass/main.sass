@@ -147,6 +147,7 @@ body
 .console
 	position: absolute
 	bottom: 0
+	width: 100%
 	.msg
 		width: 100%
 		height: 15vh
@@ -355,11 +356,8 @@ body
 	.color:hover
 		background-color: $french-rose
 	label
-		width: calc(100vw/8)
-		height: calc(100vw/8)
-		font-size: 3.5vw
-		width: calc(100vmin/2)
-		height: calc(100vmin/2)
+		width: calc(100vmin/4)
+		height: calc(100vmin/4)
 		font-size: 2.5vmax
 		border-radius: 50%
 		text-align: center
@@ -369,13 +367,13 @@ body
 		line-height: 0
 		background-color: $gray
 		+media-breakpoint-up(lg)
-			max-width: 12vw
-			max-height: 12vw
+			// max-width: 12vw
+			// max-height: 12vw
 		+media-breakpoint-down(md)
 			width: calc(100vw/4)
 			height: calc(100vw/4)
-			max-width: 140px
-			max-height: 140px
+			max-width: 20vw
+			max-height: 20vw
 		+media-breakpoint-down(sm)
 			width: calc(100vw/3)
 			height: calc(100vw/3)
