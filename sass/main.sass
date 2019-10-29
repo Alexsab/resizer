@@ -327,6 +327,8 @@ body
 	&.firstV,
 	&.firstF
 		.stepA label
+			svg path
+				fill: white
 			color: white
 			text
 				fill: white
@@ -383,6 +385,8 @@ body
 		border-radius: 50%
 		text-align: center
 		position: relative
+		svg path
+			fill: white
 		color: white
 		margin: 0
 		line-height: 0
@@ -400,7 +404,7 @@ body
 			height: calc(100vw/3)
 			font-size: 1.7rem
 		svg
-			width: 70%
+			width: 100%
 			height: auto
 		text
 			fill: white
@@ -430,26 +434,32 @@ body
 			font-size: 41px
 
 		&.download
-			background: center center no-repeat / 60% url(../img/download.svg) $gray
+			// background: center center no-repeat / 60% url(../img/download.svg) $gray
 		&.share
-			background: center 40% no-repeat/50% url(../img/share.svg) $gray
+			// background: center 40% no-repeat/50% url(../img/share.svg) $gray
 		&.yadisk
-			background: center center no-repeat/80% url(../img/yandex-disk.svg) $gray
+			// background: center center no-repeat/80% url(../img/yandex-disk.svg) $gray
 		&.color
 			background-color: $ruby
 			cursor: pointer
 		&.colortext
+			svg path
+				fill: $ruby !important
 			color: $ruby !important
 			text
 				fill: $ruby !important
 			cursor: pointer
 			&:hover
+				svg path
+					fill: $french-rose !important
 				color: $french-rose !important
 				text
 					fill: $french-rose !important
 		&.checked
 			font-weight: 700
 	&.stepA label
+		svg path
+			fill: $ruby00
 		color: $ruby00
 		text
 			fill: $ruby00
