@@ -130,6 +130,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	    	step1: 0,
 	    	step2: 0,
 	    	step3: 0
+	    	step4: 0
 	    };
 	}
 
@@ -447,13 +448,13 @@ document.addEventListener("DOMContentLoaded", function() {
 							progressBar.animate(2/3 - 1/3*renderStatus.step2);
 							break;
 						case 'end':
-							consoleLog(' КОНЕЦ');
-							
+							if(renderStatus.step3==0) consoleLog(' КОНЕЦ', ' ');
+							renderStatus.step3++;
 							break;
 						case 'uploading':
-							if(renderStatus.step3==0) consoleLog(' ВЫГРУЗКА',' ');
-							renderStatus.step3 = renderStatus.step3 + (1 - renderStatus.step3) / renderStatus.total;
-							progressBar.animate(1/3 - 1/3*renderStatus.step3);
+							if(renderStatus.step4==0) consoleLog(' ВЫГРУЗКА',' ');
+							renderStatus.step4 = renderStatus.step4 + (1 - renderStatus.step4) / renderStatus.total;
+							progressBar.animate(1/3 - 1/3*renderStatus.step4);
 							break;
 						case 'finish':
 							consoleLog('LINK:',"\n",false,true);
