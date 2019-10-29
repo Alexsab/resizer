@@ -387,7 +387,7 @@ document.addEventListener("DOMContentLoaded", function() {
 		dropzoneItem.removeAllFiles();
 		dropzoneItem.removeAllFiles(true);
 		$(".console .msg").innerText = '';
-		$('.workspace-controls').classList.add('hideconsole');
+		// $('.workspace-controls').classList.add('hideconsole');
 		btnsDisable('.resizer-social-option input','disable');
 		clearParam();
 	}
