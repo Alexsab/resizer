@@ -6,7 +6,7 @@
 	color: #666
 
 ::selection
-	background-color: $accent
+	background-color: $ruby
 	color: #fff
 
 input, textarea
@@ -24,6 +24,19 @@ body
 	font-family: 'Roboto', sans-serif
 	overflow-x: hidden
 	color: $text
+	&:after
+		// content: ""
+		// url("../img/fullscreen.svg")
+		position: absolute
+		width: 100%
+		height: 100%
+		top: 0
+		// background-image: url("../img/fullscreen.svg")
+		background-size: cover
+		background-size: 100%
+		background-position: center
+		opacity: 0.8
+		z-index: -10
 
 .grid
 	position: relative
@@ -73,7 +86,9 @@ body
 	color: white
 
 .video-wrapper #dropzone
-	padding: 5%
+	padding: 2%
+	.dz-message
+		// line-height: 10vh
 
 .video-wrapper,
 #dropzone,
@@ -86,15 +101,16 @@ body
 .video-uploaded
 	display: none
 	width: 50%
-	width: calc(90vh*446/893)
+	// width: calc(90vh*446/893)
+	width: calc(90vh*414/893)
 	height: 100%
 	position: relative
 	+media-breakpoint-down(md)
-		width: calc(100vh/1.5*446/893)
+		width: calc(100vh/1.5*414/893)
 	+media-breakpoint-down(sm)
-		width: calc(90vh*446/893)
+		width: calc(90vh*414/893)
 	+media-breakpoint-down(xs)
-		width: calc(120vw*446/893)
+		width: calc(120vw*414/893)
 
 .device-frame
 	width: 100%
@@ -115,6 +131,8 @@ body
 		background-size: 100%
 		background-repeat: no-repeat
 		background-position: center
+		left: 0
+		right: 0
 	&:before
 		// background-image: url(../img/screen.svg)
 		background-image: url(../img/iphone.svg)
@@ -148,12 +166,14 @@ body
 	position: absolute
 	bottom: 0
 	width: 100%
+	z-index: 2000
 	.msg
 		width: 100%
-		height: 15vh
+		height: 12vh
 		font-size: 2em
 		color: $ruby
-		overflow-y: scroll
+		// overflow-y: scroll
+		overflow: hidden;
 		line-height: 1.2
 	padding: 10px
 	&:before
@@ -298,10 +318,10 @@ body
 
 
 .resizer-social-options-container
-	padding: 0
+	padding: 14vmin 7vmin
 	transition: height .3s ease
 	// padding-bottom: 20vh
-	height: 80%
+	// height: 80%
 	&.firstH,
 	&.firstS,
 	&.firstV,
@@ -356,8 +376,9 @@ body
 	.color:hover
 		background-color: $french-rose
 	label
-		width: calc(100vmin/4)
-		height: calc(100vmin/4)
+		border: 2px #1a1a1a solid
+		width: calc(100vmin/3.7)
+		height: calc(100vmin/3.7)
 		font-size: 2.5vmax
 		border-radius: 50%
 		text-align: center
@@ -379,7 +400,7 @@ body
 			height: calc(100vw/3)
 			font-size: 1.7rem
 		svg
-			width: 100%
+			width: 70%
 			height: auto
 		text
 			fill: white
@@ -469,8 +490,8 @@ input[type="radio"]
 	right: 0
 
 .progress
-	width: 100px
-	height: 100px
+	width: 13.5vmin
+	height: 13.5vmin
 	display: flex
 	align-items: center
 	justify-content: center
@@ -486,8 +507,8 @@ input[type="radio"]
 	> .inner:before,
 	> .inner:after
 		position: absolute
-		width: 40px
-		height: 4px
+		width: 80px
+		height: 7px
 		border-radius: 4px
 
 	> .inner

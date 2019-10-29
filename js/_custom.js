@@ -193,8 +193,9 @@ document.addEventListener("DOMContentLoaded", function() {
 		});
 	}
 
-	function consoleLog(msg, EOL = "\n", time = false) {
+	function consoleLog(msg, EOL = "\n", time = false, reset = false) {
 		var consoleDiv = document.querySelector(".console .msg");
+		if(reset) consoleDiv.innerText = "";
 		var date = new Date();
 		if(consoleDiv.innerText == "") $('.workspace-controls').classList.remove('hideconsole');
 		consoleDiv.innerText += (time ? ( ("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2) + ":" + ("0" + date.getSeconds()).slice(-2) + " – ") : "") + msg + EOL;
@@ -436,22 +437,24 @@ document.addEventListener("DOMContentLoaded", function() {
 							clearInterval(checkStatusId);
 							break;
 						case 'preparation':
-							if(renderStatus.step1==0) consoleLog('Подготовка',' ');
+							if(renderStatus.step1==0) consoleLog('ПОДГОТОВКА',' ');
 							renderStatus.step1 = renderStatus.step1 + (1 - renderStatus.step1) / renderStatus.total;
 							progressBar.animate(1 - 1/3*renderStatus.step1);
 							break;
 						case 'start':
-							if(renderStatus.step2==0) consoleLog(' Старт',' ');
+							if(renderStatus.step2==0) consoleLog(' СТАРТ',' ');
 							renderStatus.step2 = renderStatus.step2 + (1 - renderStatus.step2) / renderStatus.total;
 							progressBar.animate(2/3 - 1/3*renderStatus.step2);
 							break;
 						case 'uploading':
-							if(renderStatus.step3==0) consoleLog(' Выгрузка',' ');
+							if(renderStatus.step3==0) consoleLog(' ВЫГРУЗКА',' ');
 							renderStatus.step3 = renderStatus.step3 + (1 - renderStatus.step3) / renderStatus.total;
 							progressBar.animate(1/3 - 1/3*renderStatus.step3);
 							break;
 						case 'finish':
-							consoleLog(' Конец');
+							consoleLog(' КОНЕЦ');
+							consoleLog('LINK:',"\n",false,true);
+							consoleLog(data.yandex);
 							clearInterval(checkStatusId);
 							checkStatus.yandex = data.yandex;
 							checkStatus.fileName = data.fileName;
