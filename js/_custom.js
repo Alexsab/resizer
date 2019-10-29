@@ -446,13 +446,16 @@ document.addEventListener("DOMContentLoaded", function() {
 							renderStatus.step2 = renderStatus.step2 + (1 - renderStatus.step2) / renderStatus.total;
 							progressBar.animate(2/3 - 1/3*renderStatus.step2);
 							break;
+						case 'end':
+							consoleLog(' КОНЕЦ');
+							
+							break;
 						case 'uploading':
 							if(renderStatus.step3==0) consoleLog(' ВЫГРУЗКА',' ');
 							renderStatus.step3 = renderStatus.step3 + (1 - renderStatus.step3) / renderStatus.total;
 							progressBar.animate(1/3 - 1/3*renderStatus.step3);
 							break;
 						case 'finish':
-							consoleLog(' КОНЕЦ');
 							consoleLog('LINK:',"\n",false,true);
 							consoleLog(data.yandex);
 							clearInterval(checkStatusId);

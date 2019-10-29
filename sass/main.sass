@@ -452,11 +452,19 @@ body
 			&:hover
 				svg path
 					fill: $french-rose !important
+					stroke: $french-rose !important
 				color: $french-rose !important
 				text
 					fill: $french-rose !important
 		&.checked
 			font-weight: 700
+			svg path
+				stroke-width: 1.5%
+				stroke: white
+		&.checked.colortext
+			svg path
+				stroke-width: 3%
+				stroke: #e91e63
 	&.stepA label
 		svg path
 			fill: $ruby00
