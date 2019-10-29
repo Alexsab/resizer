@@ -506,7 +506,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	  },
 	  uploadprogress: function(file, progress, bytesSent) {
 		progressBar.animate(progress/100);
-		// console.log([file, progress, bytesSent]);
+		console.log([file, progress, bytesSent]);
 	  },
 	  params: { 'serviceToken' : localStorage.serviceToken },
 	  init: function () {
