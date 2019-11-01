@@ -129,7 +129,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	    	total: 60,
 	    	step1: 0,
 	    	step2: 0,
-	    	step3: 0
+	    	step3: 0,
 	    	step4: 0
 	    };
 	}
