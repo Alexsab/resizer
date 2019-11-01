@@ -100,7 +100,7 @@ document.addEventListener("DOMContentLoaded", function() {
     progressBar = new ProgressBar.Circle('#progress', {
         color: '#e91e63',
         strokeWidth: 50,
-        duration: 100, // milliseconds
+        duration: 300, // milliseconds
         easing: 'easeOut'
     }),
     $ = function(name) { return document.querySelector(name) },
@@ -269,9 +269,9 @@ document.addEventListener("DOMContentLoaded", function() {
 		element.addEventListener('click', function(event) {
 
 			if(this.value === 'render') {
+				this.disabled = true;
+				$('#progress').classList.add('flipH');
 				if(localStorage.env == env) {
-					this.disabled = true;
-					$('#progress').classList.add('flipH');
 					postData('https://'+localStorage.env+'.roasup.com/api/videoResizer/startRender', startRender)
 						.then(function(data) {
 							console.log(data)
@@ -287,11 +287,16 @@ document.addEventListener("DOMContentLoaded", function() {
 						}) // JSON-строка полученная после вызова `response.json()`
 						.catch(error => console.error(error));
 				} else {
-					addOrRemoveClassToAll('.resizer-social-option.stepA.show', '', 'show');
-					addOrRemoveClassToAll('.resizer-social-option.stepB', 'hide');
-					addOrRemoveClassToAll('.resizer-social-option.stepC', '', 'hide');
-					progressBar.animate(0);
-					$('#progress').classList.add('disable');					
+					consoleLog('PROGRESS:');
+					$('.resizer-social-option.stepA.show label').classList.remove('colortext');
+					btnsDisable('.resizer-social-option input','disable');
+					checkStatusId = setInterval(falseRender, 1000);
+					checkStatus.uid = "test_test_test";
+					// addOrRemoveClassToAll('.resizer-social-option.stepA.show', '', 'show');
+					// addOrRemoveClassToAll('.resizer-social-option.stepB', 'hide');
+					// addOrRemoveClassToAll('.resizer-social-option.stepC', '', 'hide');
+					// progressBar.animate(0);
+					// $('#progress').classList.add('disable');					
 				}
 			} else {
 				startRender.effectReq = this.value;
@@ -429,49 +434,51 @@ document.addEventListener("DOMContentLoaded", function() {
 	function checkStatusVideo() {
 		if(localStorage.env == env) {
 			postData('https://'+localStorage.env+'.roasup.com/api/videoResizer/checkStatus', checkStatus)
-				.then(function(data) {
-					console.log(data.task);
-					// consoleLog('status: ' + data.task);
-					switch(data.task.toLowerCase()) {
-						case 'error':
-							consoleLog('Ошибка рендера');
-							clearInterval(checkStatusId);
-							break;
-						case 'preparation':
-							if(renderStatus.step1==0) consoleLog('ПОДГОТОВКА',' ');
-							renderStatus.step1 = renderStatus.step1 + (1 - renderStatus.step1) / renderStatus.total;
-							progressBar.animate(1 - 1/3*renderStatus.step1);
-							break;
-						case 'start':
-							if(renderStatus.step2==0) consoleLog(' СТАРТ',' ');
-							renderStatus.step2 = renderStatus.step2 + (1 - renderStatus.step2) / renderStatus.total;
-							progressBar.animate(2/3 - 1/3*renderStatus.step2);
-							break;
-						case 'end':
-							if(renderStatus.step3==0) consoleLog(' КОНЕЦ', ' ');
-							renderStatus.step3++;
-							break;
-						case 'uploading':
-							if(renderStatus.step4==0) consoleLog(' ВЫГРУЗКА',' ');
-							renderStatus.step4 = renderStatus.step4 + (1 - renderStatus.step4) / renderStatus.total;
-							progressBar.animate(1/3 - 1/3*renderStatus.step4);
-							break;
-						case 'finish':
-							consoleLog('LINK:',"\n",false,true);
-							consoleLog(data.yandex);
-							clearInterval(checkStatusId);
-							checkStatus.yandex = data.yandex;
-							checkStatus.fileName = data.fileName;
-							addOrRemoveClassToAll('.resizer-social-option.stepA.show', '', 'show');
-							addOrRemoveClassToAll('.resizer-social-option.stepB', 'hide');
-							addOrRemoveClassToAll('.resizer-social-option.stepC', '', 'hide');
-							btnsDisable('.resizer-social-option input:disabled','enable');
-							progressBar.animate(0);
-							$('#progress').classList.add('disable');
-							break;
-					}
-				}) // JSON-строка полученная после вызова `response.json()`
+				.then(successCheckStatusVideo) // JSON-строка полученная после вызова `response.json()`
 				.catch(error => console.error(error));
+		}
+	}
+
+	function successCheckStatusVideo(data) {
+		console.log(data.task);
+		// consoleLog('status: ' + data.task);
+		switch(data.task.toLowerCase()) {
+			case 'error':
+				consoleLog('Ошибка рендера');
+				clearInterval(checkStatusId);
+				break;
+			case 'preparation':
+				if(renderStatus.step1==0) consoleLog('ПОДГОТОВКА',' ');
+				renderStatus.step1 = renderStatus.step1 + (1 - renderStatus.step1) / renderStatus.total;
+				progressBar.animate(1 - 1/3*renderStatus.step1);
+				break;
+			case 'start':
+				if(renderStatus.step2==0) consoleLog(' | СТАРТ',' ');
+				renderStatus.step2 = renderStatus.step2 + (1 - renderStatus.step2) / renderStatus.total;
+				progressBar.animate(2/3 - 1/3*renderStatus.step2);
+				break;
+			case 'end':
+				if(renderStatus.step3==0) consoleLog(' | КОНЕЦ', ' ');
+				renderStatus.step3++;
+				break;
+			case 'uploading':
+				if(renderStatus.step4==0) consoleLog(' | ВЫГРУЗКА',' ');
+				renderStatus.step4 = renderStatus.step4 + (1 - renderStatus.step4) / renderStatus.total;
+				progressBar.animate(1/3 - 1/3*renderStatus.step4);
+				break;
+			case 'finish':
+				consoleLog('LINK:',"\n",false,true);
+				consoleLog(data.yandex);
+				clearInterval(checkStatusId);
+				checkStatus.yandex = data.yandex;
+				checkStatus.fileName = data.fileName;
+				addOrRemoveClassToAll('.resizer-social-option.stepA.show', '', 'show');
+				addOrRemoveClassToAll('.resizer-social-option.stepB', 'hide');
+				addOrRemoveClassToAll('.resizer-social-option.stepC', '', 'hide');
+				btnsDisable('.resizer-social-option input:disabled','enable');
+				progressBar.animate(0);
+				$('#progress').classList.add('disable');
+				break;
 		}
 	}
 
@@ -580,6 +587,8 @@ document.addEventListener("DOMContentLoaded", function() {
 		dropzoneItem.uploadFiles = function(files) {
 		  var self = this;
 
+		  self.emit('sending');
+		  
 		  for (var i = 0; i < files.length; i++) {
 
 		    var file = files[i];
@@ -616,6 +625,51 @@ document.addEventListener("DOMContentLoaded", function() {
 		    }
 		  }
 		}
+
+	    var file = {
+		    	current: 1,
+		    	step1:{
+		    		task:"preparation", 
+			    	total:Math.round(Math.random()*10+10),
+			    },
+		    	step2:{
+		    		task:"start", 
+			    	total:Math.round(Math.random()*10+10),
+			    },
+		    	step3:{
+		    		task:"end", 
+			    	total:Math.round(Math.random()*5+5),
+			    },
+		    	step4:{
+		    		task:"uploading", 
+			    	total:Math.round(Math.random()*10+10),
+			    },
+		    	step5:{
+		    		task:"finish", 
+			    	total:1,
+			    },
+		    },
+		    totalSteps = file.step1.total + file.step2.total + file.step3.total + file.step4.total + file.step5.total;
+
+		console.log(["File", file]);
+		
+		function falseRender() {
+        	file["step"+file.current].total--;
+
+			var result = {
+				task: file["step"+file.current].task, 
+				yandex:"https://yadi.sk/d/E8uEh357SMbd-A", 
+				file:""
+			};
+
+			successCheckStatusVideo(result);
+
+			if (file["step"+file.current].total == 0) {
+				file.current++;
+			}
+		}
+
+
 	}
 
 	function postData(url = '', data = {}) {
