@@ -630,19 +630,19 @@ document.addEventListener("DOMContentLoaded", function() {
 		    	current: 1,
 		    	step1:{
 		    		task:"preparation", 
-			    	total:Math.round(Math.random()*10+10),
+			    	total:Math.round(Math.random()*7+5),
 			    },
 		    	step2:{
 		    		task:"start", 
-			    	total:Math.round(Math.random()*10+10),
+			    	total:Math.round(Math.random()*7+5),
 			    },
 		    	step3:{
 		    		task:"end", 
-			    	total:Math.round(Math.random()*5+5),
+			    	total:Math.round(Math.random()*4+2),
 			    },
 		    	step4:{
 		    		task:"uploading", 
-			    	total:Math.round(Math.random()*10+10),
+			    	total:Math.round(Math.random()*7+5),
 			    },
 		    	step5:{
 		    		task:"finish", 
@@ -659,7 +659,7 @@ document.addEventListener("DOMContentLoaded", function() {
 			var result = {
 				task: file["step"+file.current].task, 
 				yandex:"https://yadi.sk/d/E8uEh357SMbd-A", 
-				file:""
+				file:"resize_989_1570525534235_Gendex%20gxs-700.mp4"
 			};
 
 			successCheckStatusVideo(result);
