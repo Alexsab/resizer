@@ -21,54 +21,60 @@
  
 <div class="editor-container grid">
 	<div class="video-wrapper-container">
-        <div class="video-wrapper">
+		<div class="video-wrapper">
 			<div id="dropzone">
 				<form class="dropzone needsclick" id="video_upload">
-				    <div class="dz-message needsclick">
-				        Перетащи файл сюда или нажми<br>
-				        <span class="note needsclick">Загрузить</span>
-				    </div>
+					<div class="dz-message needsclick">
+						Перетащи файл сюда или нажми<br>
+						<span class="note needsclick">Загрузить</span>
+					</div>
 				</form>
 			</div>
-            <div class="video-uploaded">
-	            <div class="device-frame">
-	                <div class="screen">
-		                <div class="facebook">
-		                	<div class="resizer-fit-preview video-preview-container bgblack"></div>
-		                </div>
-	                </div>
-	            </div>
-            </div>
-        </div>
-    </div>
-    <div class="workspace-controls">
-    	
+			<div class="video-uploaded">
+				<div class="device-frame">
+					<div class="screen">
+						<div class="facebook">
+							<div class="resizer-fit-preview video-preview-container bgblack"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="workspace-controls">
+		
 	  <div class="console"><div class="msg"></div></div>
 		
-		<ul class="resizer-social-options-container grid">
+		<div class="resizer-social-options-container grid">
 	
-	    	<div class="box">
-			  <div class="progress disable" id="progress">
-			    <div class="inner">
-			    </div>
-			  </div>
+			<div class="box">
+				<div class="progress disable" id="progress">
+					<div class="inner">
+					</div>
+					<svg class="progress-ring" width="100" height="100" viewBox="0 0 100 100">
+						<circle class="progress-ring__circle" stroke="#ffffff" stroke-width="50" cx="50" cy="50" r="25" fill="transparent" />
+						<circle class="progress-ring__circle" stroke="#ffffff" stroke-width="49" cx="50" cy="50" r="24.5" fill="transparent" />
+					</svg>
+				</div>
 			</div>
 	
-		    <li class="resizer-social-option stepA">
-		        <label class="radio-label">
-		        	<input type="radio" value="H" name="stepA" disabled></input>
-	        		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" >
+			<div class="resizer-social-option stepA">
+				<label class="radio-label">
+					<input type="radio" value="H" name="stepA" disabled></input>
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" >
+						<circle cx="150" cy="150" r="146" fill="#e91d63" stroke="#1a1a1a" stroke-miterlimit="10" stroke-width="2"/>
 						<g>
 							<rect x="79.2" y="72.5" fill="none" width="141.6" height="154.9"/>
 							<path fill="#FFFFFF" d="M206.9,223.5h-28.3v-58.5h-57.4v58.5H93V82.6h28.3v60.6h57.4V82.6h28.3V223.5z"/>
 						</g>
 					</svg>
-		        </label>
-		    </li>
-		    <li class="resizer-social-option stepA">
-		        <label class="radio-label">
-		        	<input type="radio" value="S" name="stepA" disabled></input>
-	        		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" >
+				</label>
+			</div>
+			<div class="resizer-social-option stepA">
+				<label class="radio-label">
+					<input type="radio" value="S" name="stepA" disabled></input>
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" >
+						<circle cx="150" cy="150" r="146" fill="#e91d63" stroke="#1a1a1a" stroke-miterlimit="10" stroke-width="2"/>
 						<g>
 							<rect x="79.2" y="72.5" fill="none" width="141.6" height="154.9"/>
 							<path fill="#FFFFFF" d="M175.1,186.7c0-5.4-1.9-9.8-5.7-13.1s-10.4-6.4-19.9-9.3c-16.3-4.9-28.6-10.7-37-17.3
@@ -79,34 +85,37 @@
 								c0,8.3,2.5,14.5,7.4,18.4c4.9,3.9,11.5,5.9,19.9,5.9c7.5,0,13.3-1.6,17.3-4.7C173.1,196.2,175.1,192,175.1,186.7z"/>
 						</g>
 					</svg>
-		        </label>
-		    </li>
-		    <li class="resizer-social-option stepA">
-		        <label class="radio-label">
-		        	<input type="radio" value="V" name="stepA" disabled></input>
-	        		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" >
+				</label>
+			</div>
+			<div class="resizer-social-option stepA">
+				<label class="radio-label">
+					<input type="radio" value="V" name="stepA" disabled></input>
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" >
+						<circle cx="150" cy="150" r="146" fill="#e91d63" stroke="#1a1a1a" stroke-miterlimit="10" stroke-width="2"/>
 						<g>
 							<rect x="79.2" y="72.5" fill="none" width="141.6" height="154.9"/>
 							<path fill="#FFFFFF" d="M147.8,185.3l1.7,7.7h0.6l1.6-7.5l30.7-103h29.8l-47.9,140.9h-29L87.5,82.6h29.8L147.8,185.3z"/>
 						</g>
 					</svg>
-		        </label>
-		    </li>
-		    <li class="resizer-social-option stepA">
-		        <label class="radio-label">
-		        	<input type="radio" value="F" name="stepA" disabled></input>
-	        		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" >
+				</label>
+			</div>
+			<div class="resizer-social-option stepA">
+				<label class="radio-label">
+					<input type="radio" value="F" name="stepA" disabled></input>
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" >
+						<circle cx="150" cy="150" r="146" fill="#e91d63" stroke="#1a1a1a" stroke-miterlimit="10" stroke-width="2"/>
 						<g>
 							<rect x="79.2" y="72.5" fill="none" width="141.6" height="154.9"/>
 							<path fill="#FFFFFF" d="M190.1,164.9H136v58.5h-28.3V82.6H200v21.8h-64v38.8h54.1V164.9z"/>
 						</g>
 					</svg>
-		        </label>
-		    </li>
-		    <li class="resizer-social-option stepB hide">
-		        <label class="radio-label">
-		        	<input type="radio" value="render" name="finish" disabled></input>
-	        		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" >
+				</label>
+			</div>
+			<div class="resizer-social-option stepB hide">
+				<label class="radio-label">
+					<input type="radio" value="render" name="finish" disabled></input>
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" >
+						<circle cx="150" cy="150" r="146" fill="#e91d63" stroke="#1a1a1a" stroke-miterlimit="10" stroke-width="2"/>
 						<g>
 							<rect x="3.8" y="126.5" fill="none" width="292.3" height="47"/>
 							<path fill="#FFFFFF" d="M56.5,153.2v15.9h-8v-39.8h13.8c4.5,0,8.1,1,10.7,3.1c2.6,2.1,3.8,5,3.8,8.7c0,2-0.5,3.8-1.6,5.3
@@ -125,12 +134,13 @@
 								h5.7c2.2,0,3.9-0.5,5-1.4c1.1-0.9,1.6-2.4,1.6-4.2c0-1.8-0.6-3.3-1.7-4.3c-1.1-1.1-2.7-1.6-4.9-1.6h-5.8V147.1z"/>
 						</g>
 					</svg>
-		        </label>
-		    </li>
-		    <li class="resizer-social-option stepB hide">
-		        <label class="radio-label">
-		        	<input type="radio" value="crop" name="stepB" disabled></input>
-	        		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" >
+				</label>
+			</div>
+			<div class="resizer-social-option stepB hide">
+				<label class="radio-label">
+					<input type="radio" value="crop" name="stepB" disabled></input>
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" >
+						<circle cx="150" cy="150" r="146" fill="#e91d63" stroke="#1a1a1a" stroke-miterlimit="10" stroke-width="2"/>
 						<g>
 							<rect x="0" y="115.1" fill="none" width="300" height="69.7"/>
 							<path fill="#FFFFFF" d="M87.5,162.1l0.1,0.3c0.1,6.8-1.9,12.1-6.2,15.9c-4.2,3.8-10.1,5.7-17.6,5.7c-7.6,0-13.8-2.4-18.4-7.3
@@ -151,12 +161,13 @@
 								c0-3-0.9-5.6-2.7-7.6c-1.8-2-4.5-3-8.1-3h-11.5V150.3z"/>
 						</g>
 					</svg>
-		        </label>
-		    </li>
-		    <li class="resizer-social-option stepB hide">
-		        <label class="radio-label">
-		        	<input type="radio" value="blur" name="stepB" disabled></input>
-	        		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" >
+				</label>
+			</div>
+			<div class="resizer-social-option stepB hide">
+				<label class="radio-label">
+					<input type="radio" value="blur" name="stepB" disabled></input>
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" >
+						<circle cx="150" cy="150" r="146" fill="#e91d63" stroke="#1a1a1a" stroke-miterlimit="10" stroke-width="2"/>
 						<g>
 							<rect x="0" y="115.1" fill="none" width="300" height="69.7"/>
 							<path fill="#FFFFFF" d="M44.1,183.1v-63.4h20.8c7.5,0,13.3,1.5,17.5,4.4c4.2,2.9,6.3,7.3,6.3,13c0,2.9-0.8,5.5-2.3,7.8
@@ -173,37 +184,39 @@
 								 M223.5,147.9h9c3.6,0,6.2-0.8,8-2.3c1.7-1.5,2.6-3.7,2.6-6.7c0-2.9-0.9-5.2-2.6-6.9c-1.8-1.7-4.3-2.6-7.7-2.6h-9.2V147.9z"/>
 						</g>
 					</svg>
-		        </label>
-		    </li>
-		    <li class="resizer-social-option stepC hide">
-		        <label class="radio-label yadisk">
-		        	<input type="radio" value="yadisk" name="stepC" disabled>
-		        		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" >
-						  <g id="OPEN_LINK">
-							<rect x="3.8" y="93" fill="none" width="292.3" height="114"/>
-							<path fill="#FFFFFF" d="M113.4,119.3c0,4.9-1.5,8.9-4.6,12.1c-3.1,3.2-7.1,4.8-12,4.8c-4.9,0-8.9-1.6-12-4.8
-								c-3.1-3.2-4.6-7.2-4.6-12.1v-7.2c0-4.9,1.5-8.9,4.6-12.1c3.1-3.2,7-4.8,11.9-4.8c4.9,0,9,1.6,12.1,4.8c3.1,3.2,4.6,7.2,4.6,12.1
-								V119.3z M105.5,112.1c0-3.1-0.8-5.6-2.3-7.6c-1.5-2-3.7-3-6.4-3c-2.7,0-4.8,1-6.3,3c-1.5,2-2.3,4.5-2.3,7.6v7.2
-								c0,3.2,0.8,5.7,2.3,7.7c1.5,2,3.6,3,6.3,3c2.7,0,4.9-1,6.4-3c1.5-2,2.3-4.6,2.3-7.7V112.1z"/>
-							<path fill="#FFFFFF" d="M127.7,121.2v14.4h-8V95.8H135c4.6,0,8.2,1.2,10.8,3.5c2.6,2.3,3.9,5.4,3.9,9.2c0,3.8-1.3,6.9-3.9,9.2
-								c-2.6,2.3-6.2,3.5-10.8,3.5H127.7z M127.7,115.1h7.2c2.2,0,3.9-0.6,5.1-1.8c1.1-1.2,1.7-2.8,1.7-4.6c0-1.9-0.6-3.5-1.7-4.7
-								c-1.1-1.2-2.8-1.9-5.1-1.9h-7.2V115.1z"/>
-							<path fill="#FFFFFF" d="M178.2,118.2h-14.8v11.4H181v6.1h-25.5V95.8h25.5v6.2h-17.5v10h14.8V118.2z"/>
-							<path fill="#FFFFFF" d="M218.8,135.7h-8l-16.1-26.9l-0.2,0v26.8h-8V95.8h8l16.1,26.8l0.2,0V95.8h8V135.7z"/>
-							<path fill="#FFFFFF" d="M100.3,196.7h17.8v6.1H92.3V163h8V196.7z"/>
-							<path fill="#FFFFFF" d="M131.9,202.9h-8V163h8V202.9z"/>
-							<path fill="#FFFFFF" d="M172,202.9h-8L148,176l-0.2,0v26.8h-8V163h8l16.1,26.8l0.2,0V163h8V202.9z"/>
-							<path fill="#FFFFFF" d="M190.3,186.2h-2.9v16.6h-8V163h8v16.3h2.2l10.9-16.3h9.9l-13.8,18.5l14.8,21.3h-10.2L190.3,186.2z"/>
-						</g>
-	        			</svg>
-		        	</input>
-		        </label>
-		    </li>
-		    <li class="resizer-social-option stepC hide">
-		        <label class="radio-label share">
-		        	<input type="radio" value="share" name="stepC" disabled>
-		        		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" >
-		        			<g id="COPY_LINK">
+				</label>
+			</div>
+			<div class="resizer-social-option stepC hide">
+				<label class="radio-label yadisk">
+					<input type="radio" value="yadisk" name="stepC" disabled>
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" >
+							<circle cx="150" cy="150" r="146" fill="#e91d63" stroke="#1a1a1a" stroke-miterlimit="10" stroke-width="2"/>
+							<g id="OPEN_LINK">
+								<rect x="3.8" y="93" fill="none" width="292.3" height="114"/>
+								<path fill="#FFFFFF" d="M113.4,119.3c0,4.9-1.5,8.9-4.6,12.1c-3.1,3.2-7.1,4.8-12,4.8c-4.9,0-8.9-1.6-12-4.8
+									c-3.1-3.2-4.6-7.2-4.6-12.1v-7.2c0-4.9,1.5-8.9,4.6-12.1c3.1-3.2,7-4.8,11.9-4.8c4.9,0,9,1.6,12.1,4.8c3.1,3.2,4.6,7.2,4.6,12.1
+									V119.3z M105.5,112.1c0-3.1-0.8-5.6-2.3-7.6c-1.5-2-3.7-3-6.4-3c-2.7,0-4.8,1-6.3,3c-1.5,2-2.3,4.5-2.3,7.6v7.2
+									c0,3.2,0.8,5.7,2.3,7.7c1.5,2,3.6,3,6.3,3c2.7,0,4.9-1,6.4-3c1.5-2,2.3-4.6,2.3-7.7V112.1z"/>
+								<path fill="#FFFFFF" d="M127.7,121.2v14.4h-8V95.8H135c4.6,0,8.2,1.2,10.8,3.5c2.6,2.3,3.9,5.4,3.9,9.2c0,3.8-1.3,6.9-3.9,9.2
+									c-2.6,2.3-6.2,3.5-10.8,3.5H127.7z M127.7,115.1h7.2c2.2,0,3.9-0.6,5.1-1.8c1.1-1.2,1.7-2.8,1.7-4.6c0-1.9-0.6-3.5-1.7-4.7
+									c-1.1-1.2-2.8-1.9-5.1-1.9h-7.2V115.1z"/>
+								<path fill="#FFFFFF" d="M178.2,118.2h-14.8v11.4H181v6.1h-25.5V95.8h25.5v6.2h-17.5v10h14.8V118.2z"/>
+								<path fill="#FFFFFF" d="M218.8,135.7h-8l-16.1-26.9l-0.2,0v26.8h-8V95.8h8l16.1,26.8l0.2,0V95.8h8V135.7z"/>
+								<path fill="#FFFFFF" d="M100.3,196.7h17.8v6.1H92.3V163h8V196.7z"/>
+								<path fill="#FFFFFF" d="M131.9,202.9h-8V163h8V202.9z"/>
+								<path fill="#FFFFFF" d="M172,202.9h-8L148,176l-0.2,0v26.8h-8V163h8l16.1,26.8l0.2,0V163h8V202.9z"/>
+								<path fill="#FFFFFF" d="M190.3,186.2h-2.9v16.6h-8V163h8v16.3h2.2l10.9-16.3h9.9l-13.8,18.5l14.8,21.3h-10.2L190.3,186.2z"/>
+							</g>
+						</svg>
+					</input>
+				</label>
+			</div>
+			<div class="resizer-social-option stepC hide">
+				<label class="radio-label share">
+					<input type="radio" value="share" name="stepC" disabled>
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" >
+							<circle cx="150" cy="150" r="146" fill="#e91d63" stroke="#1a1a1a" stroke-miterlimit="10" stroke-width="2"/>
+							<g id="COPY_LINK">
 								<rect x="3.8" y="93" fill="none" width="292.3" height="114"/>
 								<path fill="#FFFFFF" d="M110.8,122.5l0.1,0.2c0.1,4.2-1.2,7.6-3.9,10c-2.7,2.4-6.3,3.6-11,3.6c-4.8,0-8.6-1.5-11.6-4.6
 									c-2.9-3.1-4.4-7-4.4-11.9v-7.9c0-4.8,1.4-8.8,4.3-11.9c2.9-3.1,6.6-4.6,11.3-4.6c4.8,0,8.6,1.2,11.4,3.6c2.7,2.4,4.1,5.7,4,10
@@ -222,14 +235,15 @@
 								<path fill="#FFFFFF" d="M172,202.9h-8L148,176l-0.2,0v26.8h-8V163h8l16.1,26.8l0.2,0V163h8V202.9z"/>
 								<path fill="#FFFFFF" d="M190.3,186.2h-2.9v16.6h-8V163h8v16.3h2.2l10.9-16.3h9.9l-13.8,18.5l14.8,21.3h-10.2L190.3,186.2z"/>
 							</g>
-	        			</svg>
-		        	</input>
-		        </label>
-		    </li>
-		    <li class="resizer-social-option stepC hide">
-		        <label class="radio-label download">
-		        	<input type="radio" value="download" name="stepC" disabled>
-		        		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" >
+						</svg>
+					</input>
+				</label>
+			</div>
+			<div class="resizer-social-option stepC hide">
+				<label class="radio-label download">
+					<input type="radio" value="download" name="stepC" disabled>
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" >
+							<circle cx="150" cy="150" r="146" fill="#e91d63" stroke="#1a1a1a" stroke-miterlimit="10" stroke-width="2"/>
 							<g id="VIEW_VIDEO">
 								<rect x="3.8" y="93" fill="none" width="292.3" height="114"/>
 								<path fill="#FFFFFF" d="M101,124.9l0.5,2.2h0.2l0.5-2.1l8.7-29.1h8.4l-13.5,39.8h-8.2L83.9,95.8h8.4L101,124.9z"/>
@@ -248,14 +262,15 @@
 									V186.5z M218.8,179.3c0-3.1-0.8-5.6-2.3-7.6c-1.5-2-3.7-3-6.4-3c-2.7,0-4.8,1-6.3,3c-1.5,2-2.3,4.5-2.3,7.6v7.2
 									c0,3.2,0.8,5.7,2.3,7.7c1.5,2,3.6,3,6.3,3c2.7,0,4.9-1,6.4-3c1.5-2,2.3-4.6,2.3-7.7V179.3z"/>
 							</g>		        			
-	        			</svg>
-		        	</input>
-		        </label>
-		    </li>
-		    <li class="resizer-social-option stepC hide">
-		        <label class="radio-label">
-		        	<input type="radio" value="new" name="stepC" disabled>
-		        		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" >
+						</svg>
+					</input>
+				</label>
+			</div>
+			<div class="resizer-social-option stepC hide">
+				<label class="radio-label">
+					<input type="radio" value="new" name="stepC" disabled>
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" >
+							<circle cx="150" cy="150" r="146" fill="#e91d63" stroke="#1a1a1a" stroke-miterlimit="10" stroke-width="2"/>
 							<g id="NEW_RENDER">
 								<rect x="3.8" y="93" fill="none" width="292.3" height="114"/>
 								<path fill="#FFFFFF" d="M125.9,135.7h-8l-16.1-26.9l-0.2,0v26.8h-8V95.8h8l16.1,26.8l0.2,0V95.8h8V135.7z"/>
@@ -279,43 +294,43 @@
 							</g>
 						</svg>
 					</input>
-		        </label>
-		    </li>
-		</ul>
-    </div>
+				</label>
+			</div>
+		</div>
+	</div>
 </div>
 
 <div id="preview-template" style="display: none;">
   <div class="dz-preview dz-file-preview">
-    <div class="dz-image"><img data-dz-thumbnail=""/></div>
-    <div class="dz-details">
-      <!-- <div class="dz-size"><span data-dz-size=""></span></div> -->
-      <!-- <div class="dz-filename"><span data-dz-name=""></span></div> -->
-    </div>
-    <!-- <div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress=""></span></div> -->
-    <div class="dz-error-message"><span data-dz-errormessage=""></span></div>
-    <div class="dz-success-mark">
-      <svg width="54px" height="54px" viewBox="0 0 54 54" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
-        <title>Check</title>
-        <desc>Created with Sketch.</desc>
-        <defs></defs>
-        <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
-            <path d="M23.5,31.8431458 L17.5852419,25.9283877 C16.0248253,24.3679711 13.4910294,24.366835 11.9289322,25.9289322 C10.3700136,27.4878508 10.3665912,30.0234455 11.9283877,31.5852419 L20.4147581,40.0716123 C20.5133999,40.1702541 20.6159315,40.2626649 20.7218615,40.3488435 C22.2835669,41.8725651 24.794234,41.8626202 26.3461564,40.3106978 L43.3106978,23.3461564 C44.8771021,21.7797521 44.8758057,19.2483887 43.3137085,17.6862915 C41.7547899,16.1273729 39.2176035,16.1255422 37.6538436,17.6893022 L23.5,31.8431458 Z M27,53 C41.3594035,53 53,41.3594035 53,27 C53,12.6405965 41.3594035,1 27,1 C12.6405965,1 1,12.6405965 1,27 C1,41.3594035 12.6405965,53 27,53 Z" id="Oval-2" stroke-opacity="0.198794158" stroke="#747474" fill-opacity="0.816519475" fill="#FFFFFF" sketch:type="MSShapeGroup"></path>
-        </g>
-      </svg>
-    </div>
-    <div class="dz-error-mark">
-      <svg width="54px" height="54px" viewBox="0 0 54 54" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
-          <title>error</title>
-          <desc>Created with Sketch.</desc>
-          <defs></defs>
-          <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
-              <g id="Check-+-Oval-2" sketch:type="MSLayerGroup" stroke="#747474" stroke-opacity="0.198794158" fill="#FFFFFF" fill-opacity="0.816519475">
-                  <path d="M32.6568542,29 L38.3106978,23.3461564 C39.8771021,21.7797521 39.8758057,19.2483887 38.3137085,17.6862915 C36.7547899,16.1273729 34.2176035,16.1255422 32.6538436,17.6893022 L27,23.3431458 L21.3461564,17.6893022 C19.7823965,16.1255422 17.2452101,16.1273729 15.6862915,17.6862915 C14.1241943,19.2483887 14.1228979,21.7797521 15.6893022,23.3461564 L21.3431458,29 L15.6893022,34.6538436 C14.1228979,36.2202479 14.1241943,38.7516113 15.6862915,40.3137085 C17.2452101,41.8726271 19.7823965,41.8744578 21.3461564,40.3106978 L27,34.6568542 L32.6538436,40.3106978 C34.2176035,41.8744578 36.7547899,41.8726271 38.3137085,40.3137085 C39.8758057,38.7516113 39.8771021,36.2202479 38.3106978,34.6538436 L32.6568542,29 Z M27,53 C41.3594035,53 53,41.3594035 53,27 C53,12.6405965 41.3594035,1 27,1 C12.6405965,1 1,12.6405965 1,27 C1,41.3594035 12.6405965,53 27,53 Z" id="Oval-2" sketch:type="MSShapeGroup"></path>
-              </g>
-          </g>
-      </svg>
-    </div>
+	<div class="dz-image"><img data-dz-thumbnail=""/></div>
+	<div class="dz-details">
+	  <!-- <div class="dz-size"><span data-dz-size=""></span></div> -->
+	  <!-- <div class="dz-filename"><span data-dz-name=""></span></div> -->
+	</div>
+	<!-- <div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress=""></span></div> -->
+	<div class="dz-error-message"><span data-dz-errormessage=""></span></div>
+	<div class="dz-success-mark">
+	  <svg width="54px" height="54px" viewBox="0 0 54 54" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+		<title>Check</title>
+		<desc>Created with Sketch.</desc>
+		<defs></defs>
+		<g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+			<path d="M23.5,31.8431458 L17.5852419,25.9283877 C16.0248253,24.3679711 13.4910294,24.366835 11.9289322,25.9289322 C10.3700136,27.4878508 10.3665912,30.0234455 11.9283877,31.5852419 L20.4147581,40.0716123 C20.5133999,40.1702541 20.6159315,40.2626649 20.7218615,40.3488435 C22.2835669,41.8725651 24.794234,41.8626202 26.3461564,40.3106978 L43.3106978,23.3461564 C44.8771021,21.7797521 44.8758057,19.2483887 43.3137085,17.6862915 C41.7547899,16.1273729 39.2176035,16.1255422 37.6538436,17.6893022 L23.5,31.8431458 Z M27,53 C41.3594035,53 53,41.3594035 53,27 C53,12.6405965 41.3594035,1 27,1 C12.6405965,1 1,12.6405965 1,27 C1,41.3594035 12.6405965,53 27,53 Z" id="Oval-2" stroke-opacity="0.198794158" stroke="#747474" fill-opacity="0.816519475" fill="#FFFFFF" sketch:type="MSShapeGroup"></path>
+		</g>
+	  </svg>
+	</div>
+	<div class="dz-error-mark">
+	  <svg width="54px" height="54px" viewBox="0 0 54 54" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+		  <title>error</title>
+		  <desc>Created with Sketch.</desc>
+		  <defs></defs>
+		  <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+			  <g id="Check-+-Oval-2" sketch:type="MSLayerGroup" stroke="#747474" stroke-opacity="0.198794158" fill="#FFFFFF" fill-opacity="0.816519475">
+				  <path d="M32.6568542,29 L38.3106978,23.3461564 C39.8771021,21.7797521 39.8758057,19.2483887 38.3137085,17.6862915 C36.7547899,16.1273729 34.2176035,16.1255422 32.6538436,17.6893022 L27,23.3431458 L21.3461564,17.6893022 C19.7823965,16.1255422 17.2452101,16.1273729 15.6862915,17.6862915 C14.1241943,19.2483887 14.1228979,21.7797521 15.6893022,23.3461564 L21.3431458,29 L15.6893022,34.6538436 C14.1228979,36.2202479 14.1241943,38.7516113 15.6862915,40.3137085 C17.2452101,41.8726271 19.7823965,41.8744578 21.3461564,40.3106978 L27,34.6568542 L32.6538436,40.3106978 C34.2176035,41.8744578 36.7547899,41.8726271 38.3137085,40.3137085 C39.8758057,38.7516113 39.8771021,36.2202479 38.3106978,34.6538436 L32.6568542,29 Z M27,53 C41.3594035,53 53,41.3594035 53,27 C53,12.6405965 41.3594035,1 27,1 C12.6405965,1 1,12.6405965 1,27 C1,41.3594035 12.6405965,53 27,53 Z" id="Oval-2" sketch:type="MSShapeGroup"></path>
+			  </g>
+		  </g>
+	  </svg>
+	</div>
   </div>
 </div>
 

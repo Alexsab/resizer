@@ -380,13 +380,15 @@ body
 .resizer-social-option 
 	order: 4
 	.color:hover
-		background-color: $french-rose
+		// background-color: $french-rose
+		circle
+			fill: $french-rose
 	label
-		border: 2px $border solid
+		// border: 2px $border solid
 		width: calc(100vmin/3.7)
 		height: calc(100vmin/3.7)
 		font-size: 2.5vmax
-		border-radius: 50%
+		// border-radius: 50%
 		text-align: center
 		position: relative
 		svg path
@@ -394,7 +396,9 @@ body
 		color: white
 		margin: 0
 		line-height: 0
-		background-color: $gray
+		// background-color: $gray
+		circle
+			fill: $gray
 		+media-breakpoint-up(lg)
 			// max-width: 12vw
 			// max-height: 12vw
@@ -444,7 +448,9 @@ body
 		&.yadisk
 			// background: center center no-repeat/80% url(../img/yandex-disk.svg) $gray
 		&.color
-			background-color: $ruby
+			// background-color: $ruby
+			circle
+				fill: $ruby
 			cursor: pointer
 		&.colortext
 			svg path
@@ -546,8 +552,18 @@ input[type="radio"]
 		&:after
 			bottom: 0
 			transform: rotate(-90deg)
-	> svg
+	&:hover
+		.progress-ring circle:last-child
+			stroke: $french-rose
+	.progress-ring
+		width: 100%
 		height: 100%
 		display: block
-	&:hover
-		filter: opacity(0.7)
+		circle:first-child
+			stroke: $border
+		circle:last-child
+			stroke: $ruby
+		.progress-ring__circle,
+			transform-origin: center
+			transform: rotate(-90deg)
+			transition: all 0.3s ease-out
