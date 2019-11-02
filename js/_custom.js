@@ -85,12 +85,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 	/* work with settings end */
 
-	var videos = [
-		{success: true, R: 'H', renderId: 1, file: 'uploads/thanosMovie.mp4'}, 
-		{success: true, R: 'S', renderId: 1, file: 'uploads/1x1.mp4'}, 
-		{success: true, R: 'V', renderId: 1, file: 'uploads/916.mp4'}, 
-		{success: true, R: 'F', renderId: 1, file: 'uploads/4x5.mp4'}
-	],
+	var videos,
 	currentSize,
 	filesUploadResult,
 	startRender,
@@ -98,12 +93,6 @@ document.addEventListener("DOMContentLoaded", function() {
 	checkStatus,
 	renderStatus,
 	renderStatusServer,
-	/*progressBar = new ProgressBar.Circle('#progress', {
-		color: '#e91e63',
-		strokeWidth: 50,
-		duration: 300, // milliseconds
-		easing: 'easeOut'
-	}),*/
 	$ = function(name) { return document.querySelector(name) },
 	$$ = function(name) { return document.querySelectorAll(name) };
 
@@ -125,9 +114,14 @@ document.addEventListener("DOMContentLoaded", function() {
 	}
 	
 	// setProgress(74);
-	// progressBar.animate(74);
 
 	function clearParam() {
+		videos = [
+			{success: true, R: 'H', renderId: 1, file: 'uploads/thanosMovie.mp4'}, 
+			{success: true, R: 'S', renderId: 1, file: 'uploads/1x1.mp4'}, 
+			{success: true, R: 'V', renderId: 1, file: 'uploads/916.mp4'}, 
+			{success: true, R: 'F', renderId: 1, file: 'uploads/4x5.mp4'}
+		];
 		currentSize = '';
 		filesUploadResult = {
 			src : '',
@@ -139,7 +133,6 @@ document.addEventListener("DOMContentLoaded", function() {
 			sizeReq : '',
 			effectReq : ''
 		};
-		checkStatusId,
 		checkStatus = {
 			serviceToken : localStorage.serviceToken,
 			uid : '',
@@ -152,30 +145,30 @@ document.addEventListener("DOMContentLoaded", function() {
 			step2: 0,
 			step3: 0,
 			step4: 0
-		},
+		};
 		renderStatusServer = {
-				current: 1,
-				step1:{
-					task:"preparation", 
-					total:Math.round(Math.random()*7+5),
-				},
-				step2:{
-					task:"start", 
-					total:Math.round(Math.random()*7+5),
-				},
-				step3:{
-					task:"end", 
-					total:Math.round(Math.random()*4+2),
-				},
-				step4:{
-					task:"uploading", 
-					total:Math.round(Math.random()*7+5),
-				},
-				step5:{
-					task:"finish", 
-					total:1,
-				},
-			};
+			current: 1,
+			step1:{
+				task:"preparation", 
+				total:Math.round(Math.random()*7+5),
+			},
+			step2:{
+				task:"start", 
+				total:Math.round(Math.random()*7+5),
+			},
+			step3:{
+				task:"end", 
+				total:Math.round(Math.random()*4+2),
+			},
+			step4:{
+				task:"uploading", 
+				total:Math.round(Math.random()*7+5),
+			},
+			step5:{
+				task:"finish", 
+				total:1,
+			},
+		};
 	}
 
 	clearParam();
@@ -339,7 +332,6 @@ document.addEventListener("DOMContentLoaded", function() {
 					// addOrRemoveClassToAll('.resizer-social-option.stepA.show', '', 'show');
 					// addOrRemoveClassToAll('.resizer-social-option.stepB', 'hide');
 					// addOrRemoveClassToAll('.resizer-social-option.stepC', '', 'hide');
-					// progressBar.animate(0);
 					// $('#progress').classList.add('disable');					
 				}
 			} else {
@@ -421,7 +413,6 @@ document.addEventListener("DOMContentLoaded", function() {
 	 */
 	function startFromBegin() {
 		console.log('clear all');
-		// progressBar.animate(0);
 		setProgress(0);
 		addOrRemoveClassToAll('.resizer-social-option label.checked', '', 'checked');
 		addOrRemoveClassToAll('.resizer-social-option label.colortext', '', 'colortext');
@@ -495,13 +486,11 @@ document.addEventListener("DOMContentLoaded", function() {
 			case 'preparation':
 				if(renderStatus.step1==0) consoleLog('ПОДГОТОВКА',' ');
 				renderStatus.step1 = renderStatus.step1 + (1 - renderStatus.step1) / renderStatus.total;
-				// progressBar.animate(1 - 1/3*renderStatus.step1);
 				setProgress(1 - 1/3*renderStatus.step1);
 				break;
 			case 'start':
 				if(renderStatus.step2==0) consoleLog(' | СТАРТ',' ');
 				renderStatus.step2 = renderStatus.step2 + (1 - renderStatus.step2) / renderStatus.total;
-				// progressBar.animate(2/3 - 1/3*renderStatus.step2);
 				setProgress(2/3 - 1/3*renderStatus.step2);
 				break;
 			case 'end':
@@ -511,7 +500,6 @@ document.addEventListener("DOMContentLoaded", function() {
 			case 'uploading':
 				if(renderStatus.step4==0) consoleLog(' | ВЫГРУЗКА',' ');
 				renderStatus.step4 = renderStatus.step4 + (1 - renderStatus.step4) / renderStatus.total;
-				// progressBar.animate(1/3 - 1/3*renderStatus.step4);
 				setProgress(1/3 - 1/3*renderStatus.step4);
 				break;
 			case 'finish':
@@ -524,7 +512,6 @@ document.addEventListener("DOMContentLoaded", function() {
 				addOrRemoveClassToAll('.resizer-social-option.stepB', 'hide');
 				addOrRemoveClassToAll('.resizer-social-option.stepC', '', 'hide');
 				btnsDisable('.resizer-social-option input:disabled','enable');
-				// progressBar.animate(0);
 				setProgress(0);
 				$('#progress').classList.add('disable');
 				break;
@@ -565,7 +552,6 @@ document.addEventListener("DOMContentLoaded", function() {
 			return Date.now() + '_' + '.mp4';//file.name;
 		},
 		uploadprogress: function(file, progress, bytesSent) {
-			//progressBar.animate(progress/100);
 			setProgress(progress/100);
 			console.log([file, progress, bytesSent]);
 		},
