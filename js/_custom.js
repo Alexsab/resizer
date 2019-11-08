@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", function() {
 		console.log('You use token: ' + localStorage.serviceToken);
 	}
 
-	const env = 'dev2';
+	const env = 'test';
 
 	/* work with settings end */
 
@@ -308,7 +308,7 @@ document.addEventListener("DOMContentLoaded", function() {
 			if(this.value === 'render') {
 				this.disabled = true;
 				$('#progress').classList.add('flipH');
-				if(localStorage.env == env) {
+				if(localStorage.env != env) {
 					postData('https://'+localStorage.env+'.roasup.com/api/videoResizer/startRender', startRender)
 						.then(function(data) {
 							console.log(data)
@@ -332,7 +332,7 @@ document.addEventListener("DOMContentLoaded", function() {
 					// addOrRemoveClassToAll('.resizer-social-option.stepA.show', '', 'show');
 					// addOrRemoveClassToAll('.resizer-social-option.stepB', 'hide');
 					// addOrRemoveClassToAll('.resizer-social-option.stepC', '', 'hide');
-					// $('#progress').classList.add('disable');					
+					// $('#progress').classList.add('disable');
 				}
 			} else {
 				startRender.effectReq = this.value;
@@ -404,6 +404,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	$('#progress').addEventListener('click', function(event) {
 		if(this.classList.contains('disable')) return;
 		this.disabled = true;
+		this.classList.add('disable');
 		startFromBegin();
 	});
 
@@ -468,7 +469,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	 * @return {[type]} [description]
 	 */
 	function checkStatusVideo() {
-		if(localStorage.env == env) {
+		if(localStorage.env != env) {
 			postData('https://'+localStorage.env+'.roasup.com/api/videoResizer/checkStatus', checkStatus)
 				.then(successCheckStatusVideo) // JSON-строка полученная после вызова `response.json()`
 				.catch(error => console.error(error));
@@ -537,7 +538,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	Dropzone.autoDiscover = false;
 
 	var dropzoneItem = new Dropzone('#video_upload', {
-		url: (localStorage.env == env)?'https://'+localStorage.env+'.roasup.com/api/videoResizer/filesUpload':'/upload.php',
+		url: (localStorage.env != env)?'https://'+localStorage.env+'.roasup.com/api/videoResizer/filesUpload':'/upload.php',
 		previewTemplate: $('#preview-template').innerHTML,
 		parallelUploads: 1,
 		uploadMultiple: false,
@@ -572,6 +573,7 @@ document.addEventListener("DOMContentLoaded", function() {
 			
 			this.on("sending", function(file, xhr, formData) {
 				$('#progress').classList.remove('flipH');
+				$('.progress-ring').classList.remove('hide');
 				$('#progress').classList.remove('disable');
 				// formData.append("serviceToken", localStorage.serviceToken);
 			});
@@ -611,7 +613,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 	});
 
-	if(localStorage.env != env) {
+	if(localStorage.env == env) {
 		// Now fake the file upload, since GitHub does not handle file uploads
 		// and returns a 404
 
